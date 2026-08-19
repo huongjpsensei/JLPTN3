@@ -1,0 +1,1150 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sổ Tay N3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --bg:#F6F1E6;
+    --bg-raised:#FFFEFA;
+    --bg-sunken:#EEE6D3;
+    --ink:#2A2318;
+    --ink-muted:#766C56;
+    --ink-faint:#9C9276;
+    --line:#DDD2B4;
+    --line-soft:#E9E0C9;
+    --indigo:#1F4E79;
+    --indigo-strong:#153A5C;
+    --indigo-soft:#E3ECF3;
+    --indigo-soft-line:#C7D9E8;
+    --shu:#AE3527;
+    --shu-soft:#F5E3DF;
+    --shu-soft-line:#E7C3BA;
+    --good:#3E7A52;
+    --good-soft:#E2EEE3;
+    --good-soft-line:#C1DCC7;
+    --shadow: 0 1px 2px rgba(42,35,24,0.06), 0 6px 20px -8px rgba(42,35,24,0.18);
+    --shadow-lg: 0 2px 4px rgba(42,35,24,0.08), 0 16px 34px -10px rgba(42,35,24,0.30);
+    --radius: 10px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#191A1D;
+      --bg-raised:#232429;
+      --bg-sunken:#1F2024;
+      --ink:#EDE7D8;
+      --ink-muted:#A79E89;
+      --ink-faint:#7C755F;
+      --line:#3A3A3E;
+      --line-soft:#2C2D31;
+      --indigo:#89B4DE;
+      --indigo-strong:#A9CCEF;
+      --indigo-soft:rgba(137,180,222,0.14);
+      --indigo-soft-line:rgba(137,180,222,0.32);
+      --shu:#E28A7C;
+      --shu-soft:rgba(226,138,124,0.14);
+      --shu-soft-line:rgba(226,138,124,0.34);
+      --good:#7BC496;
+      --good-soft:rgba(123,196,150,0.14);
+      --good-soft-line:rgba(123,196,150,0.34);
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -10px rgba(0,0,0,0.5);
+      --shadow-lg: 0 2px 4px rgba(0,0,0,0.4), 0 18px 38px -10px rgba(0,0,0,0.65);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#191A1D;
+    --bg-raised:#232429;
+    --bg-sunken:#1F2024;
+    --ink:#EDE7D8;
+    --ink-muted:#A79E89;
+    --ink-faint:#7C755F;
+    --line:#3A3A3E;
+    --line-soft:#2C2D31;
+    --indigo:#89B4DE;
+    --indigo-strong:#A9CCEF;
+    --indigo-soft:rgba(137,180,222,0.14);
+    --indigo-soft-line:rgba(137,180,222,0.32);
+    --shu:#E28A7C;
+    --shu-soft:rgba(226,138,124,0.14);
+    --shu-soft-line:rgba(226,138,124,0.34);
+    --good:#7BC496;
+    --good-soft:rgba(123,196,150,0.14);
+    --good-soft-line:rgba(123,196,150,0.34);
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -10px rgba(0,0,0,0.5);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,0.4), 0 18px 38px -10px rgba(0,0,0,0.65);
+    color-scheme: dark;
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .jp{ font-family:"Noto Sans JP","Be Vietnam Pro",sans-serif; }
+  h1,h2,h3,.disp{ font-family:"Shippori Mincho",serif; font-weight:700; text-wrap:balance; }
+  .mono{ font-family:"JetBrains Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+  a{ color:var(--indigo); }
+  ::selection{ background:var(--indigo-soft); }
+
+  /* ---------- App shell ---------- */
+  .app{
+    display:flex;
+    min-height:100vh;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .rail{
+    flex:0 0 216px;
+    padding:28px 14px 28px 20px;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    height:100vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .brand{ display:flex; flex-direction:column; gap:2px; padding:2px 10px 14px; border-bottom:1px solid var(--line); }
+  .brand .mark{ font-family:"Shippori Mincho",serif; font-weight:800; font-size:21px; letter-spacing:.01em; }
+  .brand .sub{ font-size:11.5px; color:var(--ink-muted); letter-spacing:.03em; }
+  .brand .stats{ margin-top:8px; display:flex; gap:8px; flex-wrap:wrap; }
+  .brand .stat{ font-size:10.5px; color:var(--indigo); background:var(--indigo-soft); border:1px solid var(--indigo-soft-line); padding:2px 7px; border-radius:20px; }
+
+  nav.tabs{ display:flex; flex-direction:column; gap:2px; }
+  nav.tabs .grp-label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin:14px 10px 4px; }
+  nav.tabs .grp-label:first-child{ margin-top:0; }
+  .tab-btn{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    text-align:left; border:1px solid transparent; background:none; cursor:pointer;
+    color:var(--ink-muted); font:inherit; font-size:13.5px; font-weight:500;
+    padding:8px 10px; border-radius:8px; position:relative;
+  }
+  .tab-btn:hover{ background:var(--bg-sunken); color:var(--ink); }
+  .tab-btn.active{ background:var(--indigo-soft); color:var(--indigo-strong); font-weight:700; border-color:var(--indigo-soft-line); }
+  .tab-btn .score-pill{ font-size:10px; font-family:"JetBrains Mono",monospace; color:var(--ink-faint); background:var(--bg-sunken); border:1px solid var(--line); border-radius:20px; padding:1px 6px; }
+  .tab-btn.active .score-pill{ background:var(--bg-raised); }
+  .tab-btn.done::before{
+    content:""; position:absolute; left:-1px; top:50%; transform:translateY(-50%);
+    width:3px; height:60%; background:var(--good); border-radius:3px;
+  }
+
+  main{ flex:1; min-width:0; padding:28px 26px 80px; }
+  .panel{ display:none; }
+  .panel.active{ display:block; animation:fadein .15s ease; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(2px);} to{opacity:1; transform:none;} }
+
+  .page-head{ margin-bottom:22px; }
+  .page-head h1{ font-size:26px; margin:0 0 6px; }
+  .page-head p{ margin:0; color:var(--ink-muted); max-width:62ch; }
+
+  /* ---------- Cards / callouts ---------- */
+  .card{
+    background:var(--bg-raised); border:1px solid var(--line-soft); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:18px 20px;
+  }
+  .callout{
+    border-left:3px solid var(--shu); background:var(--shu-soft); border-radius:0 8px 8px 0;
+    padding:12px 16px; font-size:13.5px; color:var(--ink);
+  }
+  .callout b{ color:var(--shu); }
+  .callout.indigo{ border-left-color:var(--indigo); background:var(--indigo-soft); }
+  .callout.indigo b{ color:var(--indigo-strong); }
+
+  .steps{ list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:8px; counter-reset:step; }
+  .steps li{ counter-increment:step; padding-left:34px; position:relative; font-size:13.5px; }
+  .steps li::before{
+    content:counter(step); position:absolute; left:0; top:-1px; width:22px; height:22px; border-radius:50%;
+    background:var(--indigo-soft); color:var(--indigo-strong); border:1px solid var(--indigo-soft-line);
+    font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- Toolbar / search ---------- */
+  .toolbar{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+  .search{
+    flex:1 1 240px; display:flex; align-items:center; gap:8px;
+    background:var(--bg-raised); border:1px solid var(--line); border-radius:8px; padding:8px 12px;
+  }
+  .search svg{ flex:none; opacity:.5; }
+  .search input{
+    border:none; outline:none; background:none; color:var(--ink); font:inherit; font-size:13.5px; width:100%;
+  }
+  .search input::placeholder{ color:var(--ink-faint); }
+  .btn{
+    border:1px solid var(--line); background:var(--bg-raised); color:var(--ink); font:inherit; font-size:12.5px; font-weight:600;
+    padding:8px 13px; border-radius:8px; cursor:pointer; white-space:nowrap;
+  }
+  .btn:hover{ border-color:var(--ink-faint); }
+  .btn.primary{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
+  .btn.primary:hover{ background:var(--indigo-strong); }
+  .btn.ghost{ background:none; }
+  .btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .chiprow{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .chip{
+    border:1px solid var(--line); background:var(--bg-raised); color:var(--ink-muted); font:inherit; font-size:12px; font-weight:600;
+    padding:5px 10px; border-radius:20px; cursor:pointer;
+  }
+  .chip:hover{ color:var(--ink); }
+  .chip.on{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
+
+  /* ---------- Vocab accordion ---------- */
+  details.cat{ background:var(--bg-raised); border:1px solid var(--line-soft); border-radius:var(--radius); margin-bottom:10px; overflow:hidden; }
+  details.cat[open]{ box-shadow:var(--shadow); }
+  details.cat summary{
+    list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; padding:13px 16px;
+    font-weight:700; font-size:14px;
+  }
+  details.cat summary::-webkit-details-marker{ display:none; }
+  details.cat summary .code{
+    flex:none; width:26px; height:26px; border-radius:7px; background:var(--indigo-soft); color:var(--indigo-strong);
+    display:flex; align-items:center; justify-content:center; font-family:"Shippori Mincho",serif; font-weight:800; font-size:13px;
+  }
+  details.cat summary .arrow{ margin-left:auto; transition:transform .15s; color:var(--ink-faint); }
+  details.cat[open] summary .arrow{ transform:rotate(90deg); }
+  details.cat summary .n{ font-weight:500; font-size:11.5px; color:var(--ink-faint); font-family:"JetBrains Mono",monospace; }
+
+  .tblwrap{ overflow-x:auto; }
+  table.vocab{ width:100%; border-collapse:collapse; }
+  table.vocab thead th{
+    text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint);
+    padding:6px 16px; border-top:1px solid var(--line-soft); font-weight:600;
+  }
+  table.vocab tbody tr{ border-top:1px solid var(--line-soft); }
+  table.vocab tbody tr:hover{ background:var(--bg-sunken); }
+  table.vocab td{ padding:8px 16px; vertical-align:baseline; }
+  table.vocab td.stt{ font-family:"JetBrains Mono",monospace; font-size:11px; color:var(--ink-faint); width:1%; }
+  table.vocab td.word{ font-size:16px; white-space:nowrap; }
+  table.vocab td.reading{ color:var(--indigo); font-size:13px; white-space:nowrap; }
+  table.vocab td.meaning{ color:var(--ink); width:100%; }
+  table.vocab td.lvl{ width:1%; }
+  .lvl-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; }
+  .lvl-dot.A{ background:var(--shu); }
+  .lvl-dot.B{ background:var(--ink-faint); }
+
+  /* ---------- Kanji grid ---------- */
+  .kgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(128px,1fr)); gap:10px; }
+  .kcard{
+    background:var(--bg-raised); border:1px solid var(--line-soft); border-radius:10px; padding:12px 10px;
+    text-align:center; box-shadow:var(--shadow);
+  }
+  .kcard .glyph{ font-family:"Shippori Mincho",serif; font-size:32px; line-height:1; margin-bottom:6px; }
+  .kcard .ex{ font-size:13px; margin-bottom:2px; }
+  .kcard .rd{ color:var(--indigo); font-size:11.5px; margin-bottom:4px; }
+  .kcard .mn{ color:var(--ink-muted); font-size:11px; line-height:1.35; }
+
+  /* ---------- Quiz ---------- */
+  .quiz-head{
+    display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:14px; padding:13px 18px;
+    background:var(--bg-raised); border:1px solid var(--line-soft); border-top:3px solid var(--indigo); border-radius:var(--radius);
+    box-shadow:var(--shadow-lg);
+    position:sticky; top:0; z-index:3;
+  }
+  @media (max-width:860px){
+    .quiz-head{ position:static; }
+  }
+  .quiz-head .timer{ font-family:"JetBrains Mono",monospace; font-size:19px; font-weight:700; color:var(--indigo-strong); min-width:64px; }
+  .quiz-head .progress-wrap{ flex:1 1 160px; }
+  .quiz-head .progress-label{ font-size:11px; color:var(--ink-muted); margin-bottom:4px; display:flex; justify-content:space-between; }
+  .progress-track{ height:6px; border-radius:6px; background:var(--bg-sunken); overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--indigo); border-radius:6px; transition:width .2s; }
+  .quiz-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+
+  .score-banner{
+    display:none; margin:14px 0; padding:18px 20px; border-radius:var(--radius); border:1px solid var(--good-soft-line);
+    background:var(--good-soft); align-items:center; gap:20px; flex-wrap:wrap;
+  }
+  .score-banner.show{ display:flex; }
+  .score-banner .big{ font-family:"Shippori Mincho",serif; font-size:34px; font-weight:800; color:var(--good); }
+  .score-banner .big small{ font-size:15px; font-weight:600; color:var(--ink-muted); font-family:"Be Vietnam Pro",sans-serif; }
+  .score-banner .breakdown{ display:flex; gap:14px; flex-wrap:wrap; font-size:12px; color:var(--ink-muted); }
+  .score-banner .breakdown b{ color:var(--ink); }
+
+  .qsection-title{
+    display:flex; align-items:baseline; gap:10px; margin:26px 0 12px; padding-bottom:6px; border-bottom:2px solid var(--line);
+  }
+  .qsection-title .disp{ font-size:17px; }
+  .qsection-title .hint{ font-size:12px; color:var(--ink-muted); }
+  .qsection-title:first-child{ margin-top:6px; }
+
+  .qcard{
+    background:var(--bg-raised); border:1px solid var(--line-soft); border-radius:var(--radius); padding:14px 18px 16px;
+    margin-bottom:10px; transition:border-color .15s, background .15s;
+  }
+  .qcard .qtext{ display:flex; gap:10px; margin-bottom:12px; }
+  .qcard .qnum{ flex:none; font-family:"JetBrains Mono",monospace; font-weight:700; color:var(--ink-faint); font-size:12px; padding-top:3px; }
+  .qcard .qsentence{ font-size:16.5px; }
+  .qcard.answered{ border-color:var(--indigo-soft-line); }
+  .qcard.correct{ border-color:var(--good-soft-line); background:var(--good-soft); }
+  .qcard.wrong{ border-color:var(--shu-soft-line); background:var(--shu-soft); }
+
+  .options{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-left:30px; }
+  .opt{
+    display:flex; align-items:center; gap:9px; border:1px solid var(--line); background:var(--bg-raised);
+    border-radius:8px; padding:8px 10px; cursor:pointer; font-size:14.5px; text-align:left;
+  }
+  .opt:hover{ border-color:var(--indigo); }
+  .opt .bub{
+    flex:none; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--ink-faint); color:var(--ink-faint);
+    display:flex; align-items:center; justify-content:center; font-family:"JetBrains Mono",monospace; font-size:11px; font-weight:700;
+  }
+  .opt.sel{ border-color:var(--indigo); background:var(--indigo-soft); }
+  .opt.sel .bub{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
+  .qcard.graded .opt{ cursor:default; }
+  .qcard.graded .opt.is-correct{ border-color:var(--good); background:var(--good-soft); }
+  .qcard.graded .opt.is-correct .bub{ background:var(--good); border-color:var(--good); color:#fff; }
+  .qcard.graded .opt.sel.is-wrong{ border-color:var(--shu); background:var(--shu-soft); }
+  .qcard.graded .opt.sel.is-wrong .bub{ background:var(--shu); border-color:var(--shu); color:#fff; }
+  .qcard .stamp{ margin-top:10px; margin-left:30px; font-size:12px; font-weight:700; display:none; align-items:center; gap:6px; }
+  .qcard.graded .stamp{ display:flex; }
+  .qcard.correct .stamp{ color:var(--good); }
+  .qcard.wrong .stamp{ color:var(--shu); }
+  .qcard .stamp .mk{ font-size:15px; }
+
+  @media (max-width:560px){
+    .options{ grid-template-columns:1fr; margin-left:0; }
+    .qcard .qtext{ margin-bottom:10px; }
+    .qcard .stamp{ margin-left:0; }
+    .qsection-title{ flex-direction:column; align-items:flex-start; gap:2px; }
+  }
+
+  .footnote{ margin-top:26px; font-size:12px; color:var(--ink-faint); max-width:70ch; }
+
+  /* ---------- Rail collapse on mobile ---------- */
+  @media (max-width:860px){
+    .app{ flex-direction:column; }
+    .rail{
+      position:sticky; top:0; z-index:5; height:auto; width:100%; flex:none; padding:12px 12px 10px;
+      background:var(--bg); border-bottom:1px solid var(--line); backdrop-filter:saturate(1.4) blur(6px);
+    }
+    .brand{ border-bottom:none; padding-bottom:8px; flex-direction:row; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px 14px; }
+    .brand .stats{ margin-top:0; }
+    nav.tabs{ flex-direction:row; overflow-x:auto; gap:6px; padding-bottom:2px; }
+    nav.tabs .grp-label{ display:none; }
+    .tab-btn{ flex:none; }
+    main{ padding:20px 16px 60px; }
+  }
+
+  :focus-visible{ outline:2px solid var(--indigo); outline-offset:2px; }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
+
+  /* ---------- Gate / Admin ---------- */
+  #view-gate{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 18px; }
+  .gate-card{
+    width:100%; max-width:400px; background:var(--bg-raised); border:1px solid var(--line-soft);
+    border-radius:14px; box-shadow:var(--shadow); padding:28px 26px 24px;
+  }
+  .gate-tag{
+    display:inline-flex; align-items:center; gap:5px; font-family:"Shippori Mincho",serif; font-size:12px; font-weight:700;
+    color:var(--indigo-strong); background:var(--indigo-soft); border:1px solid var(--indigo-soft-line);
+    padding:3px 9px; border-radius:20px; margin-bottom:14px;
+  }
+  .gate-card h1{ font-size:21px; margin:0 0 6px; }
+  .gate-card p.desc{ margin:0 0 20px; font-size:13px; color:var(--ink-muted); }
+  .field{ margin-bottom:14px; }
+  .field label{ display:block; font-size:11.5px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:5px; }
+  .field input{
+    width:100%; border:1px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; font-size:14px;
+    padding:10px 12px; border-radius:8px; outline:none; box-sizing:border-box;
+  }
+  .field input:focus{ border-color:var(--indigo); }
+  .gate-status{ display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-muted); min-height:20px; margin-bottom:14px; }
+  .status-dot{ width:7px; height:7px; border-radius:50%; background:var(--ink-faint); flex:none; }
+  .status-dot.pending{ background:var(--indigo); }
+  .status-dot.approved{ background:var(--good); }
+  .status-dot.rejected{ background:var(--shu); }
+  .gate-actions{ display:flex; gap:8px; }
+  .gate-actions .btn{ flex:1; }
+  .gate-err{ font-size:12px; color:var(--shu); margin:-6px 0 12px; display:none; }
+  .gate-err.show{ display:block; }
+
+  #view-admin{ max-width:900px; margin:0 auto; padding:32px 24px 60px; }
+  .admin-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .admin-head h1{ font-size:22px; margin:0; }
+  table.reqs{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  table.reqs th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); padding:8px 12px; }
+  table.reqs td{ padding:10px 12px; border-top:1px solid var(--line-soft); vertical-align:middle; }
+  table.reqs td.em{ font-family:"JetBrains Mono",monospace; font-size:12.5px; }
+  .badge{ display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+  .badge.pending{ background:var(--indigo-soft); color:var(--indigo-strong); border:1px solid var(--indigo-soft-line); }
+  .badge.approved{ background:var(--good-soft); color:var(--good); border:1px solid var(--good-soft-line); }
+  .badge.rejected{ background:var(--shu-soft); color:var(--shu); border:1px solid var(--shu-soft-line); }
+  .row-actions{ display:flex; gap:6px; flex-wrap:wrap; }
+  .row-actions .btn{ padding:5px 10px; font-size:11.5px; }
+  .admin-toolbar{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; align-items:center; }
+  .admin-add{ display:flex; gap:8px; margin-top:18px; flex-wrap:wrap; }
+  .admin-add input{ flex:1 1 220px; border:1px solid var(--line); background:var(--bg-raised); color:var(--ink); font:inherit; font-size:13px; padding:8px 11px; border-radius:8px; box-sizing:border-box; }
+  .empty-note{ color:var(--ink-faint); font-size:13px; padding:20px 0; }
+
+  .top-account{ display:none; align-items:center; justify-content:space-between; gap:8px; margin-top:10px; padding-top:10px; border-top:1px solid var(--line); }
+  .top-account .who{ font-size:11px; color:var(--ink-faint); font-family:"JetBrains Mono",monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .top-account button{ font-size:11px; color:var(--ink-muted); background:none; border:none; cursor:pointer; text-decoration:underline; text-underline-offset:2px; font:inherit; flex:none; }
+  .top-account button:hover{ color:var(--shu); }
+</style>
+
+</head>
+<body>
+<div id="view-gate" style="display:none;">
+  <div class="gate-card">
+    <span class="gate-tag jp">申込書</span>
+    <h1>Truy cập trang luyện đề</h1>
+    <p class="desc">Nhập email của bạn. Bấm "Gửi yêu cầu" để xin truy cập; sau khi admin duyệt, bấm "Vào trang".</p>
+
+    <div class="field">
+      <label for="gate-email">Email</label>
+      <input type="email" id="gate-email" placeholder="ban@gmail.com" autocomplete="email">
+    </div>
+    <div class="field" id="gate-pass-field" style="display:none;">
+      <label for="gate-pass">Mật khẩu quản trị</label>
+      <input type="password" id="gate-pass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <div class="gate-err" id="gate-err"></div>
+    <div class="gate-status" id="gate-status"><span class="status-dot" id="gate-dot"></span><span id="gate-status-text">Đang kiểm tra phiên đã lưu…</span></div>
+
+    <div class="gate-actions" id="gate-actions-user">
+      <button class="btn" id="btn-request" type="button">Gửi yêu cầu</button>
+      <button class="btn primary" id="btn-enter" type="button" disabled>Vào trang</button>
+    </div>
+    <div class="gate-actions" id="gate-actions-admin" style="display:none;">
+      <button class="btn primary" id="btn-admin-login" type="button" style="flex:1;">Đăng nhập quản trị</button>
+    </div>
+  </div>
+</div>
+
+<div id="view-admin" style="display:none;">
+  <div class="admin-head">
+    <div>
+      <div class="gate-tag jp" style="margin-bottom:8px;">管理</div>
+      <h1>Duyệt truy cập</h1>
+    </div>
+    <div class="row-actions">
+      <button class="btn ghost" id="admin-logout" type="button">Đăng xuất</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:6px 0 12px;">
+    <div style="overflow-x:auto;">
+    <table class="reqs">
+      <thead><tr><th>Email</th><th>Gửi lúc</th><th>Trạng thái</th><th>Hành động</th></tr></thead>
+      <tbody id="admin-tbody"></tbody>
+    </table>
+    </div>
+    <div class="empty-note" id="admin-empty" style="display:none;">Chưa có yêu cầu nào.</div>
+  </div>
+
+  <div class="admin-add">
+    <input type="email" id="admin-add-email" placeholder="Thêm email và duyệt luôn…">
+    <button class="btn primary" id="admin-add-btn" type="button">Thêm &amp; duyệt</button>
+  </div>
+</div>
+
+<div class="app" id="view-app" style="display:none;">
+  <aside class="rail">
+    <div class="brand">
+      <div class="mark">Sổ Tay N3</div>
+      <div class="sub">Văn tự・Ngữ vựng — 文字・語彙</div>
+      <div class="stats">
+        <span class="stat">583 từ</span>
+        <span class="stat">180 Kanji</span>
+        <span class="stat">5 đề × 35 câu</span>
+      </div>
+      <div class="top-account" id="brand-account">
+        <span class="who" id="brand-who"></span>
+        <button id="brand-logout" type="button">Đăng xuất</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <div class="grp-label">Ôn tập</div>
+      <button class="tab-btn" data-tab="vocab">Từ vựng</button>
+      <button class="tab-btn" data-tab="kanji">Kanji</button>
+      <div class="grp-label">Luyện đề</div>
+      <button class="tab-btn" data-tab="de1">Đề luyện 1<span class="score-pill" id="pill-de1"></span></button>
+      <button class="tab-btn" data-tab="de2">Đề luyện 2<span class="score-pill" id="pill-de2"></span></button>
+      <button class="tab-btn" data-tab="de3">Đề luyện 3<span class="score-pill" id="pill-de3"></span></button>
+      <button class="tab-btn" data-tab="de4">Đề luyện 4<span class="score-pill" id="pill-de4"></span></button>
+      <button class="tab-btn" data-tab="de5">Đề luyện 5<span class="score-pill" id="pill-de5"></span></button>
+    </nav>
+  </aside>
+
+  <main id="main">
+
+    <section class="panel" id="panel-vocab">
+      <div class="page-head">
+        <h1>Ngân hàng từ vựng N3</h1>
+        <p>583 từ, chia 15 nhóm chủ đề A–O. Chấm <span class="lvl-dot A" style="vertical-align:middle;"></span> = nhóm ưu tiên kế thừa, <span class="lvl-dot B" style="vertical-align:middle;"></span> = nhóm mở rộng — đây là mức ưu tiên ôn tập trong tài liệu, không phải tần suất thi chính thức.</p>
+      </div>
+      <div class="toolbar">
+        <div class="search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="vocab-search" type="text" placeholder="Tìm theo từ, cách đọc hoặc nghĩa…" autocomplete="off">
+        </div>
+        <button class="btn" id="vocab-expand">Mở tất cả</button>
+        <button class="btn" id="vocab-collapse">Thu gọn</button>
+      </div>
+      <div id="vocab-empty" style="display:none; color:var(--ink-muted); font-size:13.5px; padding:20px 0;">Không tìm thấy từ phù hợp.</div>
+      <div id="vocab-root"></div>
+    </section>
+
+    <section class="panel" id="panel-kanji">
+      <div class="page-head">
+        <h1>180 Kanji trọng tâm qua từ ví dụ</h1>
+        <p>Mỗi Kanji đi kèm một từ ví dụ trong ngân hàng từ vựng, giúp học theo cụm từ thay vì học ký tự rời.</p>
+      </div>
+      <div class="toolbar">
+        <div class="search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="kanji-search" type="text" placeholder="Tìm theo Kanji, từ ví dụ hoặc nghĩa…" autocomplete="off">
+        </div>
+      </div>
+      <div id="kanji-empty" style="display:none; color:var(--ink-muted); font-size:13.5px; padding:20px 0;">Không tìm thấy Kanji phù hợp.</div>
+      <div class="kgrid" id="kanji-root"></div>
+    </section>
+
+    
+    <section class="panel" id="panel-de1">
+      <div class="page-head">
+        <h1>Đề luyện 1 — 文字・語彙</h1>
+        <p>35 câu · 5 dạng 問題1–問題5 · thời gian gợi ý 30 phút. Chọn đáp án rồi bấm "Nộp bài" để chấm điểm ngay.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-de1">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-de1">30:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-de1">0 / 35 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-de1" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-de1">Làm lại</button>
+          <button class="btn primary" id="submit-de1">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-de1">
+        <div class="score-num big" id="scorenum-de1"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-de1"></div>
+    </section>
+
+
+    <section class="panel" id="panel-de2">
+      <div class="page-head">
+        <h1>Đề luyện 2 — 文字・語彙</h1>
+        <p>35 câu · 5 dạng 問題1–問題5 · thời gian gợi ý 30 phút. Chọn đáp án rồi bấm "Nộp bài" để chấm điểm ngay.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-de2">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-de2">30:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-de2">0 / 35 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-de2" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-de2">Làm lại</button>
+          <button class="btn primary" id="submit-de2">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-de2">
+        <div class="score-num big" id="scorenum-de2"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-de2"></div>
+    </section>
+
+
+    <section class="panel" id="panel-de3">
+      <div class="page-head">
+        <h1>Đề luyện 3 — 文字・語彙</h1>
+        <p>35 câu · 5 dạng 問題1–問題5 · thời gian gợi ý 30 phút. Chọn đáp án rồi bấm "Nộp bài" để chấm điểm ngay.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-de3">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-de3">30:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-de3">0 / 35 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-de3" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-de3">Làm lại</button>
+          <button class="btn primary" id="submit-de3">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-de3">
+        <div class="score-num big" id="scorenum-de3"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-de3"></div>
+    </section>
+
+
+    <section class="panel" id="panel-de4">
+      <div class="page-head">
+        <h1>Đề luyện 4 — 文字・語彙</h1>
+        <p>35 câu · 5 dạng 問題1–問題5 · thời gian gợi ý 30 phút. Chọn đáp án rồi bấm "Nộp bài" để chấm điểm ngay.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-de4">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-de4">30:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-de4">0 / 35 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-de4" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-de4">Làm lại</button>
+          <button class="btn primary" id="submit-de4">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-de4">
+        <div class="score-num big" id="scorenum-de4"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-de4"></div>
+    </section>
+
+
+    <section class="panel" id="panel-de5">
+      <div class="page-head">
+        <h1>Đề luyện 5 — 文字・語彙</h1>
+        <p>35 câu · 5 dạng 問題1–問題5 · thời gian gợi ý 30 phút. Chọn đáp án rồi bấm "Nộp bài" để chấm điểm ngay.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-de5">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-de5">30:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-de5">0 / 35 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-de5" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-de5">Làm lại</button>
+          <button class="btn primary" id="submit-de5">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-de5">
+        <div class="score-num big" id="scorenum-de5"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-de5"></div>
+    </section>
+
+
+  </main>
+</div>
+
+<script>
+/* =================== DATA =================== */
+
+const CATS = [{"code":"A","name":"Học tập - giáo dục","count":40},{"code":"B","name":"Công việc - công sở","count":40},{"code":"C","name":"Đời sống hằng ngày - nhà cửa","count":40},{"code":"D","name":"Giao thông - du lịch","count":40},{"code":"E","name":"Sức khỏe - cơ thể - thiên nhiên","count":40},{"code":"F","name":"Xã hội - kinh tế - văn hóa","count":40},{"code":"G","name":"Giao tiếp - cảm xúc - quan hệ","count":39},{"code":"H","name":"Khái niệm - logic - vấn đề","count":39},{"code":"I","name":"Động từ quan trọng","count":56},{"code":"J","name":"Tính từ - trạng từ - trạng thái","count":54},{"code":"K","name":"Thời gian - vị trí - số lượng","count":40},{"code":"L","name":"Thông tin - công nghệ - truyền thông","count":38},{"code":"M","name":"Mua sắm - dịch vụ - tiền bạc","count":37},{"code":"N","name":"Hành động - tình huống thường gặp","count":37},{"code":"O","name":"Bổ sung từ bộ trước","count":3}];
+const VOCAB = [{"stt":1,"level":"B","word":"学習","reading":"がくしゅう","meaning":"học tập","cat":0},{"stt":2,"level":"B","word":"勉強","reading":"べんきょう","meaning":"học, học tập","cat":0},{"stt":3,"level":"B","word":"復習","reading":"ふくしゅう","meaning":"ôn tập","cat":0},{"stt":4,"level":"B","word":"予習","reading":"よしゅう","meaning":"chuẩn bị bài trước","cat":0},{"stt":5,"level":"B","word":"暗記","reading":"あんき","meaning":"học thuộc, ghi nhớ","cat":0},{"stt":6,"level":"B","word":"理解","reading":"りかい","meaning":"hiểu, sự hiểu biết","cat":0},{"stt":7,"level":"B","word":"説明","reading":"せつめい","meaning":"giải thích","cat":0},{"stt":8,"level":"B","word":"質問","reading":"しつもん","meaning":"câu hỏi, hỏi","cat":0},{"stt":9,"level":"B","word":"答え","reading":"こたえ","meaning":"câu trả lời","cat":0},{"stt":10,"level":"A","word":"成績","reading":"せいせき","meaning":"thành tích, kết quả học tập","cat":0},{"stt":11,"level":"B","word":"試験","reading":"しけん","meaning":"kỳ thi","cat":0},{"stt":12,"level":"B","word":"合格","reading":"ごうかく","meaning":"đỗ, đạt","cat":0},{"stt":13,"level":"B","word":"不合格","reading":"ふごうかく","meaning":"trượt, không đạt","cat":0},{"stt":14,"level":"B","word":"受験","reading":"じゅけん","meaning":"dự thi","cat":0},{"stt":15,"level":"B","word":"入学","reading":"にゅうがく","meaning":"nhập học","cat":0},{"stt":16,"level":"B","word":"卒業","reading":"そつぎょう","meaning":"tốt nghiệp","cat":0},{"stt":17,"level":"B","word":"授業","reading":"じゅぎょう","meaning":"giờ học","cat":0},{"stt":18,"level":"B","word":"講義","reading":"こうぎ","meaning":"bài giảng","cat":0},{"stt":19,"level":"B","word":"教科書","reading":"きょうかしょ","meaning":"sách giáo khoa","cat":0},{"stt":20,"level":"B","word":"参考書","reading":"さんこうしょ","meaning":"sách tham khảo","cat":0},{"stt":21,"level":"B","word":"辞書","reading":"じしょ","meaning":"từ điển","cat":0},{"stt":22,"level":"A","word":"単語","reading":"たんご","meaning":"từ vựng","cat":0},{"stt":23,"level":"B","word":"文法","reading":"ぶんぽう","meaning":"ngữ pháp","cat":0},{"stt":24,"level":"B","word":"発音","reading":"はつおん","meaning":"phát âm","cat":0},{"stt":25,"level":"B","word":"例文","reading":"れいぶん","meaning":"câu ví dụ","cat":0},{"stt":26,"level":"B","word":"宿題","reading":"しゅくだい","meaning":"bài tập về nhà","cat":0},{"stt":27,"level":"B","word":"提出","reading":"ていしゅつ","meaning":"nộp, trình nộp","cat":0},{"stt":28,"level":"B","word":"締切","reading":"しめきり","meaning":"hạn chót","cat":0},{"stt":29,"level":"A","word":"奨学金","reading":"しょうがくきん","meaning":"học bổng","cat":0},{"stt":30,"level":"B","word":"留学","reading":"りゅうがく","meaning":"du học","cat":0},{"stt":31,"level":"B","word":"専門","reading":"せんもん","meaning":"chuyên môn","cat":0},{"stt":32,"level":"B","word":"研究","reading":"けんきゅう","meaning":"nghiên cứu","cat":0},{"stt":33,"level":"B","word":"調査","reading":"ちょうさ","meaning":"điều tra, khảo sát","cat":0},{"stt":34,"level":"B","word":"知識","reading":"ちしき","meaning":"kiến thức","cat":0},{"stt":35,"level":"B","word":"能力","reading":"のうりょく","meaning":"năng lực","cat":0},{"stt":36,"level":"B","word":"練習","reading":"れんしゅう","meaning":"luyện tập","cat":0},{"stt":37,"level":"A","word":"訓練","reading":"くんれん","meaning":"huấn luyện","cat":0},{"stt":38,"level":"B","word":"教育","reading":"きょういく","meaning":"giáo dục","cat":0},{"stt":39,"level":"B","word":"課題","reading":"かだい","meaning":"bài tập, vấn đề cần giải quyết","cat":0},{"stt":40,"level":"B","word":"学期","reading":"がっき","meaning":"học kỳ","cat":0},{"stt":41,"level":"B","word":"仕事","reading":"しごと","meaning":"công việc","cat":1},{"stt":42,"level":"B","word":"職業","reading":"しょくぎょう","meaning":"nghề nghiệp","cat":1},{"stt":43,"level":"B","word":"職場","reading":"しょくば","meaning":"nơi làm việc","cat":1},{"stt":44,"level":"B","word":"会社","reading":"かいしゃ","meaning":"công ty","cat":1},{"stt":45,"level":"B","word":"会議","reading":"かいぎ","meaning":"cuộc họp","cat":1},{"stt":46,"level":"B","word":"予定","reading":"よてい","meaning":"dự định, lịch trình","cat":1},{"stt":47,"level":"B","word":"連絡","reading":"れんらく","meaning":"liên lạc","cat":1},{"stt":48,"level":"B","word":"報告","reading":"ほうこく","meaning":"báo cáo","cat":1},{"stt":49,"level":"B","word":"相談","reading":"そうだん","meaning":"trao đổi, tư vấn","cat":1},{"stt":50,"level":"B","word":"申請","reading":"しんせい","meaning":"đăng ký, xin cấp","cat":1},{"stt":51,"level":"B","word":"申込","reading":"もうしこみ","meaning":"đăng ký","cat":1},{"stt":52,"level":"A","word":"申込書","reading":"もうしこみしょ","meaning":"đơn đăng ký","cat":1},{"stt":53,"level":"B","word":"受付","reading":"うけつけ","meaning":"quầy tiếp nhận, tiếp nhận","cat":1},{"stt":54,"level":"B","word":"担当","reading":"たんとう","meaning":"phụ trách","cat":1},{"stt":55,"level":"B","word":"部長","reading":"ぶちょう","meaning":"trưởng phòng","cat":1},{"stt":56,"level":"B","word":"上司","reading":"じょうし","meaning":"cấp trên","cat":1},{"stt":57,"level":"B","word":"同僚","reading":"どうりょう","meaning":"đồng nghiệp","cat":1},{"stt":58,"level":"B","word":"就職","reading":"しゅうしょく","meaning":"xin việc, đi làm","cat":1},{"stt":59,"level":"B","word":"転職","reading":"てんしょく","meaning":"chuyển việc","cat":1},{"stt":60,"level":"A","word":"通勤","reading":"つうきん","meaning":"đi làm hằng ngày","cat":1},{"stt":61,"level":"B","word":"勤務","reading":"きんむ","meaning":"làm việc, công tác","cat":1},{"stt":62,"level":"B","word":"出勤","reading":"しゅっきん","meaning":"đi làm","cat":1},{"stt":63,"level":"B","word":"欠勤","reading":"けっきん","meaning":"nghỉ làm","cat":1},{"stt":64,"level":"B","word":"残業","reading":"ざんぎょう","meaning":"làm thêm giờ","cat":1},{"stt":65,"level":"B","word":"給料","reading":"きゅうりょう","meaning":"lương","cat":1},{"stt":66,"level":"B","word":"収入","reading":"しゅうにゅう","meaning":"thu nhập","cat":1},{"stt":67,"level":"B","word":"支出","reading":"ししゅつ","meaning":"chi tiêu, khoản chi","cat":1},{"stt":68,"level":"B","word":"作業","reading":"さぎょう","meaning":"công việc, thao tác","cat":1},{"stt":69,"level":"B","word":"資料","reading":"しりょう","meaning":"tài liệu","cat":1},{"stt":70,"level":"B","word":"書類","reading":"しょるい","meaning":"giấy tờ, hồ sơ","cat":1},{"stt":71,"level":"B","word":"契約","reading":"けいやく","meaning":"hợp đồng","cat":1},{"stt":72,"level":"B","word":"条件","reading":"じょうけん","meaning":"điều kiện","cat":1},{"stt":73,"level":"B","word":"経験","reading":"けいけん","meaning":"kinh nghiệm","cat":1},{"stt":74,"level":"B","word":"技術","reading":"ぎじゅつ","meaning":"kỹ thuật","cat":1},{"stt":75,"level":"A","word":"出張","reading":"しゅっちょう","meaning":"đi công tác","cat":1},{"stt":76,"level":"B","word":"休暇","reading":"きゅうか","meaning":"kỳ nghỉ","cat":1},{"stt":77,"level":"B","word":"面接","reading":"めんせつ","meaning":"phỏng vấn","cat":1},{"stt":78,"level":"B","word":"採用","reading":"さいよう","meaning":"tuyển dụng","cat":1},{"stt":79,"level":"B","word":"退職","reading":"たいしょく","meaning":"nghỉ việc","cat":1},{"stt":80,"level":"B","word":"責任","reading":"せきにん","meaning":"trách nhiệm","cat":1},{"stt":81,"level":"B","word":"生活","reading":"せいかつ","meaning":"cuộc sống, sinh hoạt","cat":2},{"stt":82,"level":"B","word":"習慣","reading":"しゅうかん","meaning":"thói quen, tập quán","cat":2},{"stt":83,"level":"B","word":"用事","reading":"ようじ","meaning":"việc cần làm","cat":2},{"stt":84,"level":"B","word":"支度","reading":"したく","meaning":"chuẩn bị","cat":2},{"stt":85,"level":"B","word":"準備","reading":"じゅんび","meaning":"chuẩn bị","cat":2},{"stt":86,"level":"B","word":"片付け","reading":"かたづけ","meaning":"dọn dẹp","cat":2},{"stt":87,"level":"B","word":"掃除","reading":"そうじ","meaning":"dọn vệ sinh","cat":2},{"stt":88,"level":"B","word":"洗濯","reading":"せんたく","meaning":"giặt giũ","cat":2},{"stt":89,"level":"B","word":"料理","reading":"りょうり","meaning":"nấu ăn, món ăn","cat":2},{"stt":90,"level":"B","word":"食事","reading":"しょくじ","meaning":"bữa ăn","cat":2},{"stt":91,"level":"B","word":"買い物","reading":"かいもの","meaning":"mua sắm","cat":2},{"stt":92,"level":"B","word":"支払い","reading":"しはらい","meaning":"thanh toán","cat":2},{"stt":93,"level":"B","word":"料金","reading":"りょうきん","meaning":"phí, cước","cat":2},{"stt":94,"level":"B","word":"家賃","reading":"やちん","meaning":"tiền thuê nhà","cat":2},{"stt":95,"level":"B","word":"住所","reading":"じゅうしょ","meaning":"địa chỉ","cat":2},{"stt":96,"level":"B","word":"引越し","reading":"ひっこし","meaning":"chuyển nhà","cat":2},{"stt":97,"level":"B","word":"留守","reading":"るす","meaning":"vắng nhà","cat":2},{"stt":98,"level":"B","word":"玄関","reading":"げんかん","meaning":"lối vào nhà","cat":2},{"stt":99,"level":"B","word":"台所","reading":"だいどころ","meaning":"nhà bếp","cat":2},{"stt":100,"level":"B","word":"浴室","reading":"よくしつ","meaning":"phòng tắm","cat":2},{"stt":101,"level":"B","word":"冷蔵庫","reading":"れいぞうこ","meaning":"tủ lạnh","cat":2},{"stt":102,"level":"B","word":"暖房","reading":"だんぼう","meaning":"sưởi ấm","cat":2},{"stt":103,"level":"B","word":"冷房","reading":"れいぼう","meaning":"điều hòa, làm mát","cat":2},{"stt":104,"level":"B","word":"家具","reading":"かぐ","meaning":"đồ nội thất","cat":2},{"stt":105,"level":"B","word":"家事","reading":"かじ","meaning":"việc nhà","cat":2},{"stt":106,"level":"B","word":"近所","reading":"きんじょ","meaning":"hàng xóm, khu lân cận","cat":2},{"stt":107,"level":"B","word":"留守番","reading":"るすばん","meaning":"trông nhà","cat":2},{"stt":108,"level":"B","word":"故障","reading":"こしょう","meaning":"hỏng hóc","cat":2},{"stt":109,"level":"B","word":"修理","reading":"しゅうり","meaning":"sửa chữa","cat":2},{"stt":110,"level":"B","word":"電源","reading":"でんげん","meaning":"nguồn điện","cat":2},{"stt":111,"level":"B","word":"電池","reading":"でんち","meaning":"pin","cat":2},{"stt":112,"level":"B","word":"荷物","reading":"にもつ","meaning":"hành lý, đồ đạc","cat":2},{"stt":113,"level":"B","word":"宅配便","reading":"たくはいびん","meaning":"dịch vụ giao hàng","cat":2},{"stt":114,"level":"B","word":"郵便","reading":"ゆうびん","meaning":"bưu điện, thư tín","cat":2},{"stt":115,"level":"B","word":"届く","reading":"とどく","meaning":"được gửi tới, tới nơi","cat":2},{"stt":116,"level":"B","word":"届ける","reading":"とどける","meaning":"giao, gửi tới","cat":2},{"stt":117,"level":"B","word":"保存","reading":"ほぞん","meaning":"bảo quản, lưu","cat":2},{"stt":118,"level":"B","word":"捨てる","reading":"すてる","meaning":"vứt bỏ","cat":2},{"stt":119,"level":"B","word":"拾う","reading":"ひろう","meaning":"nhặt lên","cat":2},{"stt":120,"level":"B","word":"壊れる","reading":"こわれる","meaning":"bị hỏng","cat":2},{"stt":121,"level":"B","word":"交通","reading":"こうつう","meaning":"giao thông","cat":3},{"stt":122,"level":"B","word":"電車","reading":"でんしゃ","meaning":"tàu điện","cat":3},{"stt":123,"level":"B","word":"地下鉄","reading":"ちかてつ","meaning":"tàu điện ngầm","cat":3},{"stt":124,"level":"B","word":"新幹線","reading":"しんかんせん","meaning":"tàu cao tốc Shinkansen","cat":3},{"stt":125,"level":"B","word":"駅","reading":"えき","meaning":"nhà ga","cat":3},{"stt":126,"level":"B","word":"空港","reading":"くうこう","meaning":"sân bay","cat":3},{"stt":127,"level":"B","word":"出発","reading":"しゅっぱつ","meaning":"khởi hành","cat":3},{"stt":128,"level":"A","word":"到着","reading":"とうちゃく","meaning":"đến nơi","cat":3},{"stt":129,"level":"B","word":"乗換","reading":"のりかえ","meaning":"chuyển tàu, đổi tuyến","cat":3},{"stt":130,"level":"B","word":"運転","reading":"うんてん","meaning":"lái xe","cat":3},{"stt":131,"level":"B","word":"駐車","reading":"ちゅうしゃ","meaning":"đỗ xe","cat":3},{"stt":132,"level":"B","word":"道路","reading":"どうろ","meaning":"đường sá","cat":3},{"stt":133,"level":"B","word":"信号","reading":"しんごう","meaning":"đèn tín hiệu","cat":3},{"stt":134,"level":"B","word":"交差点","reading":"こうさてん","meaning":"ngã tư","cat":3},{"stt":135,"level":"B","word":"通行","reading":"つうこう","meaning":"lưu thông, qua lại","cat":3},{"stt":136,"level":"B","word":"渋滞","reading":"じゅうたい","meaning":"tắc đường","cat":3},{"stt":137,"level":"B","word":"事故","reading":"じこ","meaning":"tai nạn","cat":3},{"stt":138,"level":"B","word":"速度","reading":"そくど","meaning":"tốc độ","cat":3},{"stt":139,"level":"B","word":"方向","reading":"ほうこう","meaning":"phương hướng","cat":3},{"stt":140,"level":"B","word":"距離","reading":"きょり","meaning":"khoảng cách","cat":3},{"stt":141,"level":"B","word":"途中","reading":"とちゅう","meaning":"giữa đường, đang giữa chừng","cat":3},{"stt":142,"level":"B","word":"往復","reading":"おうふく","meaning":"khứ hồi","cat":3},{"stt":143,"level":"B","word":"片道","reading":"かたみち","meaning":"một chiều","cat":3},{"stt":144,"level":"B","word":"運賃","reading":"うんちん","meaning":"cước vận chuyển","cat":3},{"stt":145,"level":"B","word":"切符","reading":"きっぷ","meaning":"vé","cat":3},{"stt":146,"level":"B","word":"座席","reading":"ざせき","meaning":"chỗ ngồi","cat":3},{"stt":147,"level":"B","word":"観光","reading":"かんこう","meaning":"tham quan, du lịch","cat":3},{"stt":148,"level":"B","word":"旅行","reading":"りょこう","meaning":"du lịch","cat":3},{"stt":149,"level":"B","word":"宿泊","reading":"しゅくはく","meaning":"lưu trú","cat":3},{"stt":150,"level":"B","word":"予約","reading":"よやく","meaning":"đặt trước","cat":3},{"stt":151,"level":"B","word":"旅館","reading":"りょかん","meaning":"nhà trọ kiểu Nhật","cat":3},{"stt":152,"level":"A","word":"案内","reading":"あんない","meaning":"hướng dẫn, chỉ dẫn","cat":3},{"stt":153,"level":"A","word":"見送る","reading":"みおくる","meaning":"tiễn, hoãn","cat":3},{"stt":154,"level":"B","word":"迎える","reading":"むかえる","meaning":"đón","cat":3},{"stt":155,"level":"A","word":"遅れる","reading":"おくれる","meaning":"trễ, chậm","cat":3},{"stt":156,"level":"B","word":"間に合う","reading":"まにあう","meaning":"kịp giờ","cat":3},{"stt":157,"level":"B","word":"迷う","reading":"まよう","meaning":"lạc đường, phân vân","cat":3},{"stt":158,"level":"B","word":"横断","reading":"おうだん","meaning":"băng qua","cat":3},{"stt":159,"level":"A","word":"横断禁止","reading":"おうだんきんし","meaning":"cấm băng qua đường","cat":3},{"stt":160,"level":"B","word":"乗客","reading":"じょうきゃく","meaning":"hành khách","cat":3},{"stt":161,"level":"A","word":"健康","reading":"けんこう","meaning":"sức khỏe","cat":4},{"stt":162,"level":"B","word":"病気","reading":"びょうき","meaning":"bệnh","cat":4},{"stt":163,"level":"B","word":"症状","reading":"しょうじょう","meaning":"triệu chứng","cat":4},{"stt":164,"level":"B","word":"熱","reading":"ねつ","meaning":"sốt, nhiệt","cat":4},{"stt":165,"level":"B","word":"咳","reading":"せき","meaning":"ho","cat":4},{"stt":166,"level":"B","word":"薬","reading":"くすり","meaning":"thuốc","cat":4},{"stt":167,"level":"B","word":"治療","reading":"ちりょう","meaning":"điều trị","cat":4},{"stt":168,"level":"B","word":"診察","reading":"しんさつ","meaning":"khám bệnh","cat":4},{"stt":169,"level":"B","word":"医者","reading":"いしゃ","meaning":"bác sĩ","cat":4},{"stt":170,"level":"B","word":"患者","reading":"かんじゃ","meaning":"bệnh nhân","cat":4},{"stt":171,"level":"B","word":"入院","reading":"にゅういん","meaning":"nhập viện","cat":4},{"stt":172,"level":"B","word":"退院","reading":"たいいん","meaning":"xuất viện","cat":4},{"stt":173,"level":"B","word":"運動","reading":"うんどう","meaning":"vận động, thể dục","cat":4},{"stt":174,"level":"B","word":"睡眠","reading":"すいみん","meaning":"giấc ngủ","cat":4},{"stt":175,"level":"B","word":"栄養","reading":"えいよう","meaning":"dinh dưỡng","cat":4},{"stt":176,"level":"B","word":"食欲","reading":"しょくよく","meaning":"cảm giác thèm ăn","cat":4},{"stt":177,"level":"B","word":"体温","reading":"たいおん","meaning":"nhiệt độ cơ thể","cat":4},{"stt":178,"level":"B","word":"気分","reading":"きぶん","meaning":"tâm trạng, cảm giác","cat":4},{"stt":179,"level":"B","word":"疲れる","reading":"つかれる","meaning":"mệt","cat":4},{"stt":180,"level":"A","word":"痛い","reading":"いたい","meaning":"đau","cat":4},{"stt":181,"level":"B","word":"痛み","reading":"いたみ","meaning":"cơn đau","cat":4},{"stt":182,"level":"B","word":"怪我","reading":"けが","meaning":"chấn thương","cat":4},{"stt":183,"level":"B","word":"救急","reading":"きゅうきゅう","meaning":"cấp cứu","cat":4},{"stt":184,"level":"A","word":"のど","reading":"のど","meaning":"cổ họng","cat":4},{"stt":185,"level":"A","word":"眠る","reading":"ねむる","meaning":"ngủ","cat":4},{"stt":186,"level":"B","word":"治る","reading":"なおる","meaning":"khỏi bệnh, được sửa xong","cat":4},{"stt":187,"level":"B","word":"治す","reading":"なおす","meaning":"chữa, sửa","cat":4},{"stt":188,"level":"B","word":"環境","reading":"かんきょう","meaning":"môi trường","cat":4},{"stt":189,"level":"B","word":"自然","reading":"しぜん","meaning":"tự nhiên","cat":4},{"stt":190,"level":"A","word":"地球","reading":"ちきゅう","meaning":"Trái Đất","cat":4},{"stt":191,"level":"A","word":"気温","reading":"きおん","meaning":"nhiệt độ không khí","cat":4},{"stt":192,"level":"B","word":"天気","reading":"てんき","meaning":"thời tiết","cat":4},{"stt":193,"level":"B","word":"湿度","reading":"しつど","meaning":"độ ẩm","cat":4},{"stt":194,"level":"B","word":"台風","reading":"たいふう","meaning":"bão","cat":4},{"stt":195,"level":"B","word":"地震","reading":"じしん","meaning":"động đất","cat":4},{"stt":196,"level":"A","word":"波","reading":"なみ","meaning":"sóng","cat":4},{"stt":197,"level":"B","word":"雲","reading":"くも","meaning":"mây","cat":4},{"stt":198,"level":"B","word":"雷","reading":"かみなり","meaning":"sấm sét","cat":4},{"stt":199,"level":"B","word":"風","reading":"かぜ","meaning":"gió","cat":4},{"stt":200,"level":"B","word":"季節","reading":"きせつ","meaning":"mùa","cat":4},{"stt":201,"level":"B","word":"社会","reading":"しゃかい","meaning":"xã hội","cat":5},{"stt":202,"level":"B","word":"経済","reading":"けいざい","meaning":"kinh tế","cat":5},{"stt":203,"level":"B","word":"政治","reading":"せいじ","meaning":"chính trị","cat":5},{"stt":204,"level":"B","word":"法律","reading":"ほうりつ","meaning":"pháp luật","cat":5},{"stt":205,"level":"B","word":"制度","reading":"せいど","meaning":"chế độ, hệ thống","cat":5},{"stt":206,"level":"A","word":"税金","reading":"ぜいきん","meaning":"thuế","cat":5},{"stt":207,"level":"B","word":"保険","reading":"ほけん","meaning":"bảo hiểm","cat":5},{"stt":208,"level":"B","word":"人口","reading":"じんこう","meaning":"dân số","cat":5},{"stt":209,"level":"B","word":"地域","reading":"ちいき","meaning":"khu vực","cat":5},{"stt":210,"level":"B","word":"都会","reading":"とかい","meaning":"thành thị","cat":5},{"stt":211,"level":"B","word":"田舎","reading":"いなか","meaning":"nông thôn, quê","cat":5},{"stt":212,"level":"B","word":"文化","reading":"ぶんか","meaning":"văn hóa","cat":5},{"stt":213,"level":"B","word":"歴史","reading":"れきし","meaning":"lịch sử","cat":5},{"stt":214,"level":"B","word":"伝統","reading":"でんとう","meaning":"truyền thống","cat":5},{"stt":215,"level":"B","word":"国際","reading":"こくさい","meaning":"quốc tế","cat":5},{"stt":216,"level":"B","word":"国内","reading":"こくない","meaning":"trong nước","cat":5},{"stt":217,"level":"B","word":"海外","reading":"かいがい","meaning":"nước ngoài","cat":5},{"stt":218,"level":"A","word":"輸出","reading":"ゆしゅつ","meaning":"xuất khẩu","cat":5},{"stt":219,"level":"B","word":"輸入","reading":"ゆにゅう","meaning":"nhập khẩu","cat":5},{"stt":220,"level":"B","word":"資源","reading":"しげん","meaning":"tài nguyên","cat":5},{"stt":221,"level":"B","word":"産業","reading":"さんぎょう","meaning":"công nghiệp, ngành nghề","cat":5},{"stt":222,"level":"A","word":"農業","reading":"のうぎょう","meaning":"nông nghiệp","cat":5},{"stt":223,"level":"B","word":"工業","reading":"こうぎょう","meaning":"công nghiệp chế tạo","cat":5},{"stt":224,"level":"B","word":"製品","reading":"せいひん","meaning":"sản phẩm","cat":5},{"stt":225,"level":"B","word":"商品","reading":"しょうひん","meaning":"hàng hóa","cat":5},{"stt":226,"level":"B","word":"価格","reading":"かかく","meaning":"giá cả","cat":5},{"stt":227,"level":"B","word":"物価","reading":"ぶっか","meaning":"mức giá sinh hoạt","cat":5},{"stt":228,"level":"B","word":"景気","reading":"けいき","meaning":"tình hình kinh tế","cat":5},{"stt":229,"level":"B","word":"市場","reading":"しじょう","meaning":"thị trường","cat":5},{"stt":230,"level":"B","word":"消費","reading":"しょうひ","meaning":"tiêu dùng","cat":5},{"stt":231,"level":"B","word":"広告","reading":"こうこく","meaning":"quảng cáo","cat":5},{"stt":232,"level":"B","word":"宣伝","reading":"せんでん","meaning":"tuyên truyền, quảng bá","cat":5},{"stt":233,"level":"A","word":"首都","reading":"しゅと","meaning":"thủ đô","cat":5},{"stt":234,"level":"A","word":"観客","reading":"かんきゃく","meaning":"khán giả","cat":5},{"stt":235,"level":"A","word":"大量","reading":"たいりょう","meaning":"số lượng lớn","cat":5},{"stt":236,"level":"A","word":"産","reading":"さん","meaning":"sản xuất tại, xuất xứ","cat":5},{"stt":237,"level":"B","word":"公共","reading":"こうきょう","meaning":"công cộng","cat":5},{"stt":238,"level":"B","word":"平和","reading":"へいわ","meaning":"hòa bình","cat":5},{"stt":239,"level":"B","word":"世代","reading":"せだい","meaning":"thế hệ","cat":5},{"stt":240,"level":"B","word":"住民","reading":"じゅうみん","meaning":"cư dân","cat":5},{"stt":241,"level":"B","word":"気持ち","reading":"きもち","meaning":"cảm xúc, tâm trạng","cat":6},{"stt":242,"level":"B","word":"感情","reading":"かんじょう","meaning":"cảm xúc","cat":6},{"stt":243,"level":"B","word":"印象","reading":"いんしょう","meaning":"ấn tượng","cat":6},{"stt":244,"level":"B","word":"意見","reading":"いけん","meaning":"ý kiến","cat":6},{"stt":245,"level":"B","word":"考え","reading":"かんがえ","meaning":"suy nghĩ, quan điểm","cat":6},{"stt":246,"level":"B","word":"希望","reading":"きぼう","meaning":"hy vọng, nguyện vọng","cat":6},{"stt":247,"level":"B","word":"期待","reading":"きたい","meaning":"kỳ vọng","cat":6},{"stt":248,"level":"B","word":"不安","reading":"ふあん","meaning":"bất an","cat":6},{"stt":249,"level":"B","word":"心配","reading":"しんぱい","meaning":"lo lắng","cat":6},{"stt":250,"level":"B","word":"安心","reading":"あんしん","meaning":"yên tâm","cat":6},{"stt":251,"level":"A","word":"満足","reading":"まんぞく","meaning":"hài lòng","cat":6},{"stt":252,"level":"A","word":"不満","reading":"ふまん","meaning":"bất mãn, không hài lòng","cat":6},{"stt":253,"level":"B","word":"感謝","reading":"かんしゃ","meaning":"cảm ơn, lòng biết ơn","cat":6},{"stt":254,"level":"B","word":"謝る","reading":"あやまる","meaning":"xin lỗi","cat":6},{"stt":255,"level":"B","word":"笑う","reading":"わらう","meaning":"cười","cat":6},{"stt":256,"level":"B","word":"泣く","reading":"なく","meaning":"khóc","cat":6},{"stt":257,"level":"B","word":"怒る","reading":"おこる","meaning":"tức giận","cat":6},{"stt":258,"level":"B","word":"喜ぶ","reading":"よろこぶ","meaning":"vui mừng","cat":6},{"stt":259,"level":"B","word":"驚く","reading":"おどろく","meaning":"ngạc nhiên","cat":6},{"stt":260,"level":"B","word":"困る","reading":"こまる","meaning":"khó xử, gặp khó khăn","cat":6},{"stt":261,"level":"B","word":"悩む","reading":"なやむ","meaning":"phiền não, lo nghĩ","cat":6},{"stt":262,"level":"A","word":"我慢","reading":"がまん","meaning":"chịu đựng, kiềm chế","cat":6},{"stt":263,"level":"B","word":"遠慮","reading":"えんりょ","meaning":"ngại, giữ ý","cat":6},{"stt":264,"level":"B","word":"冗談","reading":"じょうだん","meaning":"chuyện đùa","cat":6},{"stt":265,"level":"A","word":"うわさ","reading":"うわさ","meaning":"tin đồn","cat":6},{"stt":266,"level":"A","word":"内緒","reading":"ないしょ","meaning":"bí mật","cat":6},{"stt":267,"level":"B","word":"約束","reading":"やくそく","meaning":"lời hứa, hẹn","cat":6},{"stt":268,"level":"B","word":"信用","reading":"しんよう","meaning":"tín nhiệm","cat":6},{"stt":269,"level":"B","word":"信頼","reading":"しんらい","meaning":"tin cậy","cat":6},{"stt":270,"level":"B","word":"尊敬","reading":"そんけい","meaning":"kính trọng","cat":6},{"stt":271,"level":"B","word":"親切","reading":"しんせつ","meaning":"tử tế","cat":6},{"stt":272,"level":"B","word":"丁寧","reading":"ていねい","meaning":"lịch sự, cẩn thận","cat":6},{"stt":273,"level":"B","word":"失礼","reading":"しつれい","meaning":"thất lễ","cat":6},{"stt":274,"level":"A","word":"慰める","reading":"なぐさめる","meaning":"an ủi","cat":6},{"stt":275,"level":"A","word":"許す","reading":"ゆるす","meaning":"tha thứ, cho phép","cat":6},{"stt":276,"level":"A","word":"正直","reading":"しょうじき","meaning":"thành thật","cat":6},{"stt":277,"level":"A","word":"がっかり","reading":"がっかり","meaning":"thất vọng","cat":6},{"stt":278,"level":"A","word":"恐ろしい","reading":"おそろしい","meaning":"đáng sợ","cat":6},{"stt":279,"level":"B","word":"仲良し","reading":"なかよし","meaning":"thân thiết","cat":6},{"stt":280,"level":"B","word":"原因","reading":"げんいん","meaning":"nguyên nhân","cat":7},{"stt":281,"level":"B","word":"理由","reading":"りゆう","meaning":"lý do","cat":7},{"stt":282,"level":"B","word":"結果","reading":"けっか","meaning":"kết quả","cat":7},{"stt":283,"level":"B","word":"目的","reading":"もくてき","meaning":"mục đích","cat":7},{"stt":284,"level":"B","word":"方法","reading":"ほうほう","meaning":"phương pháp","cat":7},{"stt":285,"level":"B","word":"手段","reading":"しゅだん","meaning":"phương tiện, biện pháp","cat":7},{"stt":286,"level":"B","word":"場合","reading":"ばあい","meaning":"trường hợp","cat":7},{"stt":287,"level":"B","word":"機会","reading":"きかい","meaning":"cơ hội","cat":7},{"stt":288,"level":"B","word":"可能","reading":"かのう","meaning":"có thể, khả năng","cat":7},{"stt":289,"level":"B","word":"必要","reading":"ひつよう","meaning":"cần thiết","cat":7},{"stt":290,"level":"B","word":"重要","reading":"じゅうよう","meaning":"quan trọng","cat":7},{"stt":291,"level":"B","word":"関係","reading":"かんけい","meaning":"quan hệ","cat":7},{"stt":292,"level":"B","word":"影響","reading":"えいきょう","meaning":"ảnh hưởng","cat":7},{"stt":293,"level":"B","word":"効果","reading":"こうか","meaning":"hiệu quả","cat":7},{"stt":294,"level":"B","word":"問題","reading":"もんだい","meaning":"vấn đề","cat":7},{"stt":295,"level":"A","word":"解決","reading":"かいけつ","meaning":"giải quyết","cat":7},{"stt":296,"level":"B","word":"状態","reading":"じょうたい","meaning":"trạng thái","cat":7},{"stt":297,"level":"B","word":"様子","reading":"ようす","meaning":"tình hình, dáng vẻ","cat":7},{"stt":298,"level":"B","word":"変化","reading":"へんか","meaning":"thay đổi","cat":7},{"stt":299,"level":"B","word":"増加","reading":"ぞうか","meaning":"tăng lên","cat":7},{"stt":300,"level":"B","word":"減少","reading":"げんしょう","meaning":"giảm xuống","cat":7},{"stt":301,"level":"B","word":"発展","reading":"はってん","meaning":"phát triển","cat":7},{"stt":302,"level":"B","word":"進歩","reading":"しんぽ","meaning":"tiến bộ","cat":7},{"stt":303,"level":"B","word":"成功","reading":"せいこう","meaning":"thành công","cat":7},{"stt":304,"level":"B","word":"失敗","reading":"しっぱい","meaning":"thất bại","cat":7},{"stt":305,"level":"B","word":"比較","reading":"ひかく","meaning":"so sánh","cat":7},{"stt":306,"level":"A","word":"共通","reading":"きょうつう","meaning":"chung, giống nhau","cat":7},{"stt":307,"level":"B","word":"特徴","reading":"とくちょう","meaning":"đặc trưng","cat":7},{"stt":308,"level":"A","word":"特長","reading":"とくちょう","meaning":"điểm mạnh, đặc điểm nổi bật","cat":7},{"stt":309,"level":"B","word":"内容","reading":"ないよう","meaning":"nội dung","cat":7},{"stt":310,"level":"B","word":"程度","reading":"ていど","meaning":"mức độ","cat":7},{"stt":311,"level":"B","word":"範囲","reading":"はんい","meaning":"phạm vi","cat":7},{"stt":312,"level":"A","word":"疑問","reading":"ぎもん","meaning":"nghi vấn, thắc mắc","cat":7},{"stt":313,"level":"A","word":"目標","reading":"もくひょう","meaning":"mục tiêu","cat":7},{"stt":314,"level":"A","word":"主張","reading":"しゅちょう","meaning":"chủ trương, ý kiến khẳng định","cat":7},{"stt":315,"level":"A","word":"わけ","reading":"わけ","meaning":"lý do","cat":7},{"stt":316,"level":"A","word":"指示","reading":"しじ","meaning":"chỉ thị, hướng dẫn","cat":7},{"stt":317,"level":"B","word":"事実","reading":"じじつ","meaning":"sự thật","cat":7},{"stt":318,"level":"B","word":"現実","reading":"げんじつ","meaning":"thực tế","cat":7},{"stt":319,"level":"B","word":"続く","reading":"つづく","meaning":"tiếp tục, kéo dài","cat":8},{"stt":320,"level":"B","word":"続ける","reading":"つづける","meaning":"tiếp tục làm","cat":8},{"stt":321,"level":"B","word":"増える","reading":"ふえる","meaning":"tăng lên","cat":8},{"stt":322,"level":"B","word":"増やす","reading":"ふやす","meaning":"làm tăng","cat":8},{"stt":323,"level":"A","word":"減る","reading":"へる","meaning":"giảm","cat":8},{"stt":324,"level":"B","word":"減らす","reading":"へらす","meaning":"làm giảm","cat":8},{"stt":325,"level":"B","word":"進む","reading":"すすむ","meaning":"tiến lên","cat":8},{"stt":326,"level":"B","word":"進める","reading":"すすめる","meaning":"tiến hành","cat":8},{"stt":327,"level":"B","word":"決まる","reading":"きまる","meaning":"được quyết định","cat":8},{"stt":328,"level":"B","word":"決める","reading":"きめる","meaning":"quyết định","cat":8},{"stt":329,"level":"B","word":"選ぶ","reading":"えらぶ","meaning":"chọn","cat":8},{"stt":330,"level":"B","word":"変わる","reading":"かわる","meaning":"thay đổi","cat":8},{"stt":331,"level":"B","word":"変える","reading":"かえる","meaning":"thay đổi cái gì","cat":8},{"stt":332,"level":"B","word":"伝える","reading":"つたえる","meaning":"truyền đạt","cat":8},{"stt":333,"level":"B","word":"伝わる","reading":"つたわる","meaning":"được truyền đạt","cat":8},{"stt":334,"level":"B","word":"支える","reading":"ささえる","meaning":"hỗ trợ, chống đỡ","cat":8},{"stt":335,"level":"B","word":"助ける","reading":"たすける","meaning":"giúp đỡ","cat":8},{"stt":336,"level":"B","word":"守る","reading":"まもる","meaning":"bảo vệ, tuân thủ","cat":8},{"stt":337,"level":"B","word":"防ぐ","reading":"ふせぐ","meaning":"ngăn chặn","cat":8},{"stt":338,"level":"B","word":"避ける","reading":"さける","meaning":"tránh","cat":8},{"stt":339,"level":"B","word":"認める","reading":"みとめる","meaning":"công nhận","cat":8},{"stt":340,"level":"A","word":"確かめる","reading":"たしかめる","meaning":"xác nhận, kiểm tra","cat":8},{"stt":341,"level":"B","word":"比べる","reading":"くらべる","meaning":"so sánh","cat":8},{"stt":342,"level":"B","word":"調べる","reading":"しらべる","meaning":"tra cứu, điều tra","cat":8},{"stt":343,"level":"B","word":"まとめる","reading":"まとめる","meaning":"tổng hợp, gom lại","cat":8},{"stt":344,"level":"B","word":"含む","reading":"ふくむ","meaning":"bao gồm","cat":8},{"stt":345,"level":"A","word":"加える","reading":"くわえる","meaning":"thêm vào","cat":8},{"stt":346,"level":"B","word":"除く","reading":"のぞく","meaning":"loại trừ","cat":8},{"stt":347,"level":"B","word":"断る","reading":"ことわる","meaning":"từ chối","cat":8},{"stt":348,"level":"B","word":"頼む","reading":"たのむ","meaning":"nhờ, yêu cầu","cat":8},{"stt":349,"level":"B","word":"任せる","reading":"まかせる","meaning":"giao phó","cat":8},{"stt":350,"level":"B","word":"申し込む","reading":"もうしこむ","meaning":"đăng ký","cat":8},{"stt":351,"level":"B","word":"支払う","reading":"しはらう","meaning":"thanh toán","cat":8},{"stt":352,"level":"A","word":"払う","reading":"はらう","meaning":"trả, thanh toán","cat":8},{"stt":353,"level":"A","word":"囲む","reading":"かこむ","meaning":"bao quanh","cat":8},{"stt":354,"level":"A","word":"沈む","reading":"しずむ","meaning":"chìm","cat":8},{"stt":355,"level":"A","word":"やり直す","reading":"やりなおす","meaning":"làm lại","cat":8},{"stt":356,"level":"A","word":"輝く","reading":"かがやく","meaning":"tỏa sáng","cat":8},{"stt":357,"level":"A","word":"余る","reading":"あまる","meaning":"dư, thừa","cat":8},{"stt":358,"level":"A","word":"転ぶ","reading":"ころぶ","meaning":"ngã","cat":8},{"stt":359,"level":"A","word":"植える","reading":"うえる","meaning":"trồng","cat":8},{"stt":360,"level":"A","word":"沸騰","reading":"ふっとう","meaning":"sôi","cat":8},{"stt":361,"level":"A","word":"曲げる","reading":"まげる","meaning":"bẻ cong, gập","cat":8},{"stt":362,"level":"A","word":"組む","reading":"くむ","meaning":"lập nhóm, ghép, khoanh","cat":8},{"stt":363,"level":"A","word":"貯める","reading":"ためる","meaning":"tiết kiệm, tích trữ","cat":8},{"stt":364,"level":"B","word":"参加する","reading":"さんかする","meaning":"tham gia","cat":8},{"stt":365,"level":"B","word":"利用する","reading":"りようする","meaning":"sử dụng","cat":8},{"stt":366,"level":"B","word":"確認する","reading":"かくにんする","meaning":"xác nhận","cat":8},{"stt":367,"level":"B","word":"紹介する","reading":"しょうかいする","meaning":"giới thiệu","cat":8},{"stt":368,"level":"B","word":"完成する","reading":"かんせいする","meaning":"hoàn thành","cat":8},{"stt":369,"level":"B","word":"発見する","reading":"はっけんする","meaning":"phát hiện","cat":8},{"stt":370,"level":"B","word":"発表する","reading":"はっぴょうする","meaning":"công bố, thuyết trình","cat":8},{"stt":371,"level":"B","word":"変更する","reading":"へんこうする","meaning":"thay đổi","cat":8},{"stt":372,"level":"B","word":"中止する","reading":"ちゅうしする","meaning":"hủy, dừng","cat":8},{"stt":373,"level":"B","word":"注意する","reading":"ちゅういする","meaning":"chú ý","cat":8},{"stt":374,"level":"B","word":"協力する","reading":"きょうりょくする","meaning":"hợp tác","cat":8},{"stt":375,"level":"B","word":"正確","reading":"せいかく","meaning":"chính xác","cat":9},{"stt":376,"level":"B","word":"確実","reading":"かくじつ","meaning":"chắc chắn","cat":9},{"stt":377,"level":"B","word":"明確","reading":"めいかく","meaning":"rõ ràng","cat":9},{"stt":378,"level":"A","word":"複雑","reading":"ふくざつ","meaning":"phức tạp","cat":9},{"stt":379,"level":"B","word":"単純","reading":"たんじゅん","meaning":"đơn giản","cat":9},{"stt":380,"level":"B","word":"便利","reading":"べんり","meaning":"tiện lợi","cat":9},{"stt":381,"level":"B","word":"不便","reading":"ふべん","meaning":"bất tiện","cat":9},{"stt":382,"level":"B","word":"安全","reading":"あんぜん","meaning":"an toàn","cat":9},{"stt":383,"level":"B","word":"危険","reading":"きけん","meaning":"nguy hiểm","cat":9},{"stt":384,"level":"B","word":"十分","reading":"じゅうぶん","meaning":"đầy đủ","cat":9},{"stt":385,"level":"B","word":"不足","reading":"ふそく","meaning":"thiếu","cat":9},{"stt":386,"level":"B","word":"余分","reading":"よぶん","meaning":"dư thừa","cat":9},{"stt":387,"level":"B","word":"豊か","reading":"ゆたか","meaning":"phong phú","cat":9},{"stt":388,"level":"B","word":"貧しい","reading":"まずしい","meaning":"nghèo","cat":9},{"stt":389,"level":"B","word":"丈夫","reading":"じょうぶ","meaning":"bền, khỏe","cat":9},{"stt":390,"level":"B","word":"重大","reading":"じゅうだい","meaning":"nghiêm trọng, quan trọng","cat":9},{"stt":391,"level":"B","word":"特別","reading":"とくべつ","meaning":"đặc biệt","cat":9},{"stt":392,"level":"B","word":"普通","reading":"ふつう","meaning":"bình thường","cat":9},{"stt":393,"level":"A","word":"当然","reading":"とうぜん","meaning":"đương nhiên","cat":9},{"stt":394,"level":"A","word":"急に","reading":"きゅうに","meaning":"đột nhiên","cat":9},{"stt":395,"level":"B","word":"徐々に","reading":"じょじょに","meaning":"dần dần","cat":9},{"stt":396,"level":"B","word":"かなり","reading":"かなり","meaning":"khá, tương đối","cat":9},{"stt":397,"level":"B","word":"ずいぶん","reading":"ずいぶん","meaning":"rất, khá nhiều","cat":9},{"stt":398,"level":"B","word":"ほとんど","reading":"ほとんど","meaning":"hầu hết, gần như","cat":9},{"stt":399,"level":"B","word":"たいてい","reading":"たいてい","meaning":"thường, đa số","cat":9},{"stt":400,"level":"B","word":"めったに","reading":"めったに","meaning":"hiếm khi","cat":9},{"stt":401,"level":"B","word":"しばらく","reading":"しばらく","meaning":"một lúc, một thời gian","cat":9},{"stt":402,"level":"B","word":"ついに","reading":"ついに","meaning":"cuối cùng","cat":9},{"stt":403,"level":"B","word":"とうとう","reading":"とうとう","meaning":"rốt cuộc","cat":9},{"stt":404,"level":"B","word":"ますます","reading":"ますます","meaning":"ngày càng","cat":9},{"stt":405,"level":"B","word":"そろそろ","reading":"そろそろ","meaning":"sắp, đến lúc","cat":9},{"stt":406,"level":"B","word":"まもなく","reading":"まもなく","meaning":"chẳng bao lâu nữa","cat":9},{"stt":407,"level":"B","word":"すでに","reading":"すでに","meaning":"đã rồi","cat":9},{"stt":408,"level":"B","word":"必ず","reading":"かならず","meaning":"nhất định","cat":9},{"stt":409,"level":"B","word":"絶対に","reading":"ぜったいに","meaning":"tuyệt đối","cat":9},{"stt":410,"level":"B","word":"おそらく","reading":"おそらく","meaning":"có lẽ","cat":9},{"stt":411,"level":"B","word":"たぶん","reading":"たぶん","meaning":"có lẽ","cat":9},{"stt":412,"level":"B","word":"きっと","reading":"きっと","meaning":"chắc chắn","cat":9},{"stt":413,"level":"B","word":"せっかく","reading":"せっかく","meaning":"mất công, nhân dịp quý","cat":9},{"stt":414,"level":"B","word":"わざわざ","reading":"わざわざ","meaning":"cất công","cat":9},{"stt":415,"level":"B","word":"たまたま","reading":"たまたま","meaning":"tình cờ","cat":9},{"stt":416,"level":"B","word":"偶然","reading":"ぐうぜん","meaning":"ngẫu nhiên","cat":9},{"stt":417,"level":"B","word":"突然","reading":"とつぜん","meaning":"đột nhiên","cat":9},{"stt":418,"level":"B","word":"実際","reading":"じっさい","meaning":"thực tế","cat":9},{"stt":419,"level":"B","word":"特に","reading":"とくに","meaning":"đặc biệt là","cat":9},{"stt":420,"level":"B","word":"別に","reading":"べつに","meaning":"không đặc biệt, riêng biệt","cat":9},{"stt":421,"level":"A","word":"速い","reading":"はやい","meaning":"nhanh","cat":9},{"stt":422,"level":"B","word":"厳しい","reading":"きびしい","meaning":"nghiêm khắc, khắc nghiệt","cat":9},{"stt":423,"level":"B","word":"珍しい","reading":"めずらしい","meaning":"hiếm, lạ","cat":9},{"stt":424,"level":"B","word":"細かい","reading":"こまかい","meaning":"chi tiết, nhỏ","cat":9},{"stt":425,"level":"B","word":"深い","reading":"ふかい","meaning":"sâu","cat":9},{"stt":426,"level":"B","word":"浅い","reading":"あさい","meaning":"nông, cạn","cat":9},{"stt":427,"level":"B","word":"広い","reading":"ひろい","meaning":"rộng","cat":9},{"stt":428,"level":"B","word":"狭い","reading":"せまい","meaning":"hẹp","cat":9},{"stt":429,"level":"B","word":"最近","reading":"さいきん","meaning":"gần đây","cat":10},{"stt":430,"level":"B","word":"以前","reading":"いぜん","meaning":"trước đây","cat":10},{"stt":431,"level":"B","word":"以後","reading":"いご","meaning":"sau đó, từ sau","cat":10},{"stt":432,"level":"B","word":"以来","reading":"いらい","meaning":"kể từ","cat":10},{"stt":433,"level":"B","word":"今後","reading":"こんご","meaning":"từ nay về sau","cat":10},{"stt":434,"level":"B","word":"将来","reading":"しょうらい","meaning":"tương lai","cat":10},{"stt":435,"level":"B","word":"当時","reading":"とうじ","meaning":"lúc đó","cat":10},{"stt":436,"level":"B","word":"現在","reading":"げんざい","meaning":"hiện tại","cat":10},{"stt":437,"level":"B","word":"過去","reading":"かこ","meaning":"quá khứ","cat":10},{"stt":438,"level":"B","word":"未来","reading":"みらい","meaning":"tương lai","cat":10},{"stt":439,"level":"B","word":"期間","reading":"きかん","meaning":"khoảng thời gian","cat":10},{"stt":440,"level":"B","word":"期限","reading":"きげん","meaning":"thời hạn","cat":10},{"stt":441,"level":"B","word":"順番","reading":"じゅんばん","meaning":"thứ tự","cat":10},{"stt":442,"level":"B","word":"最初","reading":"さいしょ","meaning":"đầu tiên","cat":10},{"stt":443,"level":"B","word":"最後","reading":"さいご","meaning":"cuối cùng","cat":10},{"stt":444,"level":"B","word":"中心","reading":"ちゅうしん","meaning":"trung tâm","cat":10},{"stt":445,"level":"B","word":"周辺","reading":"しゅうへん","meaning":"xung quanh","cat":10},{"stt":446,"level":"B","word":"内部","reading":"ないぶ","meaning":"bên trong","cat":10},{"stt":447,"level":"B","word":"外部","reading":"がいぶ","meaning":"bên ngoài","cat":10},{"stt":448,"level":"B","word":"表面","reading":"ひょうめん","meaning":"bề mặt","cat":10},{"stt":449,"level":"B","word":"裏側","reading":"うらがわ","meaning":"mặt sau","cat":10},{"stt":450,"level":"B","word":"前後","reading":"ぜんご","meaning":"trước sau, khoảng","cat":10},{"stt":451,"level":"B","word":"左右","reading":"さゆう","meaning":"trái phải","cat":10},{"stt":452,"level":"B","word":"上下","reading":"じょうげ","meaning":"trên dưới","cat":10},{"stt":453,"level":"B","word":"以下","reading":"いか","meaning":"trở xuống","cat":10},{"stt":454,"level":"B","word":"以上","reading":"いじょう","meaning":"trở lên","cat":10},{"stt":455,"level":"B","word":"未満","reading":"みまん","meaning":"chưa đến","cat":10},{"stt":456,"level":"B","word":"以内","reading":"いない","meaning":"trong vòng, không quá","cat":10},{"stt":457,"level":"B","word":"以外","reading":"いがい","meaning":"ngoài ra","cat":10},{"stt":458,"level":"B","word":"約","reading":"やく","meaning":"khoảng","cat":10},{"stt":459,"level":"B","word":"全部","reading":"ぜんぶ","meaning":"toàn bộ","cat":10},{"stt":460,"level":"B","word":"一部","reading":"いちぶ","meaning":"một phần","cat":10},{"stt":461,"level":"B","word":"半分","reading":"はんぶん","meaning":"một nửa","cat":10},{"stt":462,"level":"B","word":"残り","reading":"のこり","meaning":"phần còn lại","cat":10},{"stt":463,"level":"B","word":"順調","reading":"じゅんちょう","meaning":"thuận lợi","cat":10},{"stt":464,"level":"B","word":"間隔","reading":"かんかく","meaning":"khoảng cách, khoảng thời gian","cat":10},{"stt":465,"level":"B","word":"平均","reading":"へいきん","meaning":"trung bình","cat":10},{"stt":466,"level":"B","word":"数量","reading":"すうりょう","meaning":"số lượng","cat":10},{"stt":467,"level":"B","word":"割合","reading":"わりあい","meaning":"tỷ lệ","cat":10},{"stt":468,"level":"B","word":"倍","reading":"ばい","meaning":"gấp, lần","cat":10},{"stt":469,"level":"B","word":"情報","reading":"じょうほう","meaning":"thông tin","cat":11},{"stt":470,"level":"B","word":"通信","reading":"つうしん","meaning":"truyền thông, liên lạc","cat":11},{"stt":471,"level":"B","word":"電子","reading":"でんし","meaning":"điện tử","cat":11},{"stt":472,"level":"B","word":"機械","reading":"きかい","meaning":"máy móc","cat":11},{"stt":473,"level":"B","word":"操作","reading":"そうさ","meaning":"thao tác, điều khiển","cat":11},{"stt":474,"level":"B","word":"画面","reading":"がめん","meaning":"màn hình","cat":11},{"stt":475,"level":"B","word":"写真","reading":"しゃしん","meaning":"ảnh","cat":11},{"stt":476,"level":"B","word":"動画","reading":"どうが","meaning":"video","cat":11},{"stt":477,"level":"B","word":"記事","reading":"きじ","meaning":"bài báo","cat":11},{"stt":478,"level":"B","word":"新聞","reading":"しんぶん","meaning":"báo","cat":11},{"stt":479,"level":"B","word":"放送","reading":"ほうそう","meaning":"phát sóng","cat":11},{"stt":480,"level":"B","word":"番組","reading":"ばんぐみ","meaning":"chương trình","cat":11},{"stt":481,"level":"B","word":"ニュース","reading":"ニュース","meaning":"tin tức","cat":11},{"stt":482,"level":"B","word":"インターネット","reading":"インターネット","meaning":"Internet","cat":11},{"stt":483,"level":"B","word":"メール","reading":"メール","meaning":"email","cat":11},{"stt":484,"level":"B","word":"携帯","reading":"けいたい","meaning":"điện thoại di động","cat":11},{"stt":485,"level":"B","word":"スマホ","reading":"スマホ","meaning":"điện thoại thông minh","cat":11},{"stt":486,"level":"B","word":"アプリ","reading":"アプリ","meaning":"ứng dụng","cat":11},{"stt":487,"level":"B","word":"登録","reading":"とうろく","meaning":"đăng ký","cat":11},{"stt":488,"level":"B","word":"削除","reading":"さくじょ","meaning":"xóa","cat":11},{"stt":489,"level":"B","word":"検索","reading":"けんさく","meaning":"tìm kiếm","cat":11},{"stt":490,"level":"B","word":"利用","reading":"りよう","meaning":"sử dụng","cat":11},{"stt":491,"level":"B","word":"利用者","reading":"りようしゃ","meaning":"người sử dụng","cat":11},{"stt":492,"level":"B","word":"説明書","reading":"せつめいしょ","meaning":"sách hướng dẫn","cat":11},{"stt":493,"level":"B","word":"印刷","reading":"いんさつ","meaning":"in ấn","cat":11},{"stt":494,"level":"B","word":"入力","reading":"にゅうりょく","meaning":"nhập dữ liệu","cat":11},{"stt":495,"level":"B","word":"出力","reading":"しゅつりょく","meaning":"xuất dữ liệu","cat":11},{"stt":496,"level":"B","word":"接続","reading":"せつぞく","meaning":"kết nối","cat":11},{"stt":497,"level":"B","word":"記録","reading":"きろく","meaning":"ghi chép, ghi lại","cat":11},{"stt":498,"level":"B","word":"交換","reading":"こうかん","meaning":"trao đổi, thay thế","cat":11},{"stt":499,"level":"B","word":"連続","reading":"れんぞく","meaning":"liên tục","cat":11},{"stt":500,"level":"B","word":"番号","reading":"ばんごう","meaning":"số","cat":11},{"stt":501,"level":"B","word":"暗証番号","reading":"あんしょうばんごう","meaning":"mã PIN","cat":11},{"stt":502,"level":"B","word":"確認","reading":"かくにん","meaning":"xác nhận","cat":11},{"stt":503,"level":"A","word":"イメージ","reading":"イメージ","meaning":"hình ảnh, ấn tượng","cat":11},{"stt":504,"level":"A","word":"インタビュー","reading":"インタビュー","meaning":"phỏng vấn","cat":11},{"stt":505,"level":"B","word":"機能","reading":"きのう","meaning":"chức năng","cat":11},{"stt":506,"level":"B","word":"設定","reading":"せってい","meaning":"cài đặt, thiết lập","cat":11},{"stt":507,"level":"B","word":"店員","reading":"てんいん","meaning":"nhân viên cửa hàng","cat":12},{"stt":508,"level":"B","word":"客","reading":"きゃく","meaning":"khách","cat":12},{"stt":509,"level":"B","word":"注文","reading":"ちゅうもん","meaning":"đặt món, đặt hàng","cat":12},{"stt":510,"level":"B","word":"会計","reading":"かいけい","meaning":"thanh toán, kế toán","cat":12},{"stt":511,"level":"B","word":"現金","reading":"げんきん","meaning":"tiền mặt","cat":12},{"stt":512,"level":"B","word":"小銭","reading":"こぜに","meaning":"tiền lẻ","cat":12},{"stt":513,"level":"B","word":"お釣り","reading":"おつり","meaning":"tiền thừa","cat":12},{"stt":514,"level":"B","word":"領収書","reading":"りょうしゅうしょ","meaning":"hóa đơn, biên nhận","cat":12},{"stt":515,"level":"B","word":"値段","reading":"ねだん","meaning":"giá tiền","cat":12},{"stt":516,"level":"B","word":"割引","reading":"わりびき","meaning":"giảm giá","cat":12},{"stt":517,"level":"B","word":"無料","reading":"むりょう","meaning":"miễn phí","cat":12},{"stt":518,"level":"B","word":"有料","reading":"ゆうりょう","meaning":"có phí","cat":12},{"stt":519,"level":"B","word":"返品","reading":"へんぴん","meaning":"trả hàng","cat":12},{"stt":520,"level":"B","word":"売り切れ","reading":"うりきれ","meaning":"bán hết","cat":12},{"stt":521,"level":"B","word":"在庫","reading":"ざいこ","meaning":"hàng tồn kho","cat":12},{"stt":522,"level":"B","word":"品物","reading":"しなもの","meaning":"hàng hóa, đồ vật","cat":12},{"stt":523,"level":"B","word":"品質","reading":"ひんしつ","meaning":"chất lượng","cat":12},{"stt":524,"level":"B","word":"種類","reading":"しゅるい","meaning":"chủng loại","cat":12},{"stt":525,"level":"B","word":"サイズ","reading":"サイズ","meaning":"kích cỡ","cat":12},{"stt":526,"level":"B","word":"色","reading":"いろ","meaning":"màu sắc","cat":12},{"stt":527,"level":"B","word":"形","reading":"かたち","meaning":"hình dạng","cat":12},{"stt":528,"level":"B","word":"材料","reading":"ざいりょう","meaning":"nguyên liệu","cat":12},{"stt":529,"level":"B","word":"包装","reading":"ほうそう","meaning":"đóng gói","cat":12},{"stt":530,"level":"B","word":"配達","reading":"はいたつ","meaning":"giao hàng","cat":12},{"stt":531,"level":"B","word":"サービス","reading":"サービス","meaning":"dịch vụ","cat":12},{"stt":532,"level":"B","word":"予約席","reading":"よやくせき","meaning":"chỗ đặt trước","cat":12},{"stt":533,"level":"B","word":"満員","reading":"まんいん","meaning":"đông kín người","cat":12},{"stt":534,"level":"B","word":"空席","reading":"くうせき","meaning":"ghế trống","cat":12},{"stt":535,"level":"B","word":"営業","reading":"えいぎょう","meaning":"kinh doanh, hoạt động cửa hàng","cat":12},{"stt":536,"level":"B","word":"閉店","reading":"へいてん","meaning":"đóng cửa cửa hàng","cat":12},{"stt":537,"level":"B","word":"開店","reading":"かいてん","meaning":"mở cửa cửa hàng","cat":12},{"stt":538,"level":"B","word":"費用","reading":"ひよう","meaning":"chi phí","cat":12},{"stt":539,"level":"B","word":"予算","reading":"よさん","meaning":"ngân sách","cat":12},{"stt":540,"level":"B","word":"貯金","reading":"ちょきん","meaning":"tiết kiệm tiền","cat":12},{"stt":541,"level":"B","word":"借りる","reading":"かりる","meaning":"mượn, thuê","cat":12},{"stt":542,"level":"B","word":"貸す","reading":"かす","meaning":"cho mượn","cat":12},{"stt":543,"level":"B","word":"値上がり","reading":"ねあがり","meaning":"tăng giá","cat":12},{"stt":544,"level":"B","word":"集まる","reading":"あつまる","meaning":"tập trung, tụ họp","cat":13},{"stt":545,"level":"B","word":"集める","reading":"あつめる","meaning":"thu thập","cat":13},{"stt":546,"level":"B","word":"別れる","reading":"わかれる","meaning":"chia tay, tách ra","cat":13},{"stt":547,"level":"B","word":"分ける","reading":"わける","meaning":"chia, phân loại","cat":13},{"stt":548,"level":"B","word":"始まる","reading":"はじまる","meaning":"bắt đầu","cat":13},{"stt":549,"level":"B","word":"始める","reading":"はじめる","meaning":"bắt đầu làm","cat":13},{"stt":550,"level":"B","word":"終わる","reading":"おわる","meaning":"kết thúc","cat":13},{"stt":551,"level":"B","word":"終える","reading":"おえる","meaning":"hoàn tất","cat":13},{"stt":552,"level":"B","word":"間違う","reading":"まちがう","meaning":"nhầm","cat":13},{"stt":553,"level":"B","word":"間違える","reading":"まちがえる","meaning":"làm sai","cat":13},{"stt":554,"level":"B","word":"忘れる","reading":"わすれる","meaning":"quên","cat":13},{"stt":555,"level":"B","word":"思い出す","reading":"おもいだす","meaning":"nhớ lại","cat":13},{"stt":556,"level":"B","word":"見つかる","reading":"みつかる","meaning":"được tìm thấy","cat":13},{"stt":557,"level":"B","word":"見つける","reading":"みつける","meaning":"tìm thấy","cat":13},{"stt":558,"level":"B","word":"落とす","reading":"おとす","meaning":"làm rơi","cat":13},{"stt":559,"level":"B","word":"落ちる","reading":"おちる","meaning":"rơi","cat":13},{"stt":560,"level":"B","word":"壊す","reading":"こわす","meaning":"làm hỏng","cat":13},{"stt":561,"level":"B","word":"直す","reading":"なおす","meaning":"sửa, chỉnh lại","cat":13},{"stt":562,"level":"B","word":"戻る","reading":"もどる","meaning":"quay trở lại","cat":13},{"stt":563,"level":"B","word":"戻す","reading":"もどす","meaning":"trả lại, đưa về","cat":13},{"stt":564,"level":"B","word":"開く","reading":"ひらく","meaning":"mở, tổ chức","cat":13},{"stt":565,"level":"B","word":"閉じる","reading":"とじる","meaning":"đóng","cat":13},{"stt":566,"level":"B","word":"受け取る","reading":"うけとる","meaning":"nhận","cat":13},{"stt":567,"level":"B","word":"渡す","reading":"わたす","meaning":"trao, đưa","cat":13},{"stt":568,"level":"B","word":"渡る","reading":"わたる","meaning":"băng qua","cat":13},{"stt":569,"level":"B","word":"遅刻","reading":"ちこく","meaning":"đi muộn","cat":13},{"stt":570,"level":"B","word":"間違い","reading":"まちがい","meaning":"sai sót","cat":13},{"stt":571,"level":"B","word":"用意","reading":"ようい","meaning":"chuẩn bị","cat":13},{"stt":572,"level":"B","word":"連れる","reading":"つれる","meaning":"dẫn, đưa theo","cat":13},{"stt":573,"level":"B","word":"似合う","reading":"にあう","meaning":"hợp, phù hợp","cat":13},{"stt":574,"level":"B","word":"慣れる","reading":"なれる","meaning":"quen với","cat":13},{"stt":575,"level":"B","word":"間違いない","reading":"まちがいない","meaning":"không sai, chắc chắn","cat":13},{"stt":576,"level":"B","word":"起こる","reading":"おこる","meaning":"xảy ra","cat":13},{"stt":577,"level":"B","word":"起こす","reading":"おこす","meaning":"gây ra, đánh thức","cat":13},{"stt":578,"level":"B","word":"間に","reading":"あいだに","meaning":"trong lúc, trong khoảng","cat":13},{"stt":579,"level":"B","word":"急ぐ","reading":"いそぐ","meaning":"vội, gấp","cat":13},{"stt":580,"level":"B","word":"間に合わせる","reading":"まにあわせる","meaning":"làm cho kịp","cat":13},{"stt":581,"level":"A","word":"豆","reading":"まめ","meaning":"đậu","cat":14},{"stt":582,"level":"A","word":"がらがら","reading":"がらがら","meaning":"vắng tanh / lộc cộc","cat":14},{"stt":583,"level":"A","word":"姿勢","reading":"しせい","meaning":"tư thế, thái độ","cat":14}];
+const KANJI = [{"stt":1,"kanji":"学","example":"学習","reading":"がくしゅう","meaning":"học tập"},{"stt":2,"kanji":"習","example":"学習","reading":"がくしゅう","meaning":"học tập"},{"stt":3,"kanji":"勉","example":"勉強","reading":"べんきょう","meaning":"học, học tập"},{"stt":4,"kanji":"強","example":"勉強","reading":"べんきょう","meaning":"học, học tập"},{"stt":5,"kanji":"復","example":"復習","reading":"ふくしゅう","meaning":"ôn tập"},{"stt":6,"kanji":"予","example":"予習","reading":"よしゅう","meaning":"chuẩn bị bài trước"},{"stt":7,"kanji":"暗","example":"暗記","reading":"あんき","meaning":"học thuộc, ghi nhớ"},{"stt":8,"kanji":"記","example":"暗記","reading":"あんき","meaning":"học thuộc, ghi nhớ"},{"stt":9,"kanji":"理","example":"理解","reading":"りかい","meaning":"hiểu, sự hiểu biết"},{"stt":10,"kanji":"解","example":"理解","reading":"りかい","meaning":"hiểu, sự hiểu biết"},{"stt":11,"kanji":"説","example":"説明","reading":"せつめい","meaning":"giải thích"},{"stt":12,"kanji":"明","example":"説明","reading":"せつめい","meaning":"giải thích"},{"stt":13,"kanji":"質","example":"質問","reading":"しつもん","meaning":"câu hỏi, hỏi"},{"stt":14,"kanji":"問","example":"質問","reading":"しつもん","meaning":"câu hỏi, hỏi"},{"stt":15,"kanji":"答","example":"答え","reading":"こたえ","meaning":"câu trả lời"},{"stt":16,"kanji":"成","example":"成績","reading":"せいせき","meaning":"thành tích, kết quả học tập"},{"stt":17,"kanji":"績","example":"成績","reading":"せいせき","meaning":"thành tích, kết quả học tập"},{"stt":18,"kanji":"試","example":"試験","reading":"しけん","meaning":"kỳ thi"},{"stt":19,"kanji":"験","example":"試験","reading":"しけん","meaning":"kỳ thi"},{"stt":20,"kanji":"合","example":"合格","reading":"ごうかく","meaning":"đỗ, đạt"},{"stt":21,"kanji":"格","example":"合格","reading":"ごうかく","meaning":"đỗ, đạt"},{"stt":22,"kanji":"不","example":"不合格","reading":"ふごうかく","meaning":"trượt, không đạt"},{"stt":23,"kanji":"受","example":"受験","reading":"じゅけん","meaning":"dự thi"},{"stt":24,"kanji":"入","example":"入学","reading":"にゅうがく","meaning":"nhập học"},{"stt":25,"kanji":"卒","example":"卒業","reading":"そつぎょう","meaning":"tốt nghiệp"},{"stt":26,"kanji":"業","example":"卒業","reading":"そつぎょう","meaning":"tốt nghiệp"},{"stt":27,"kanji":"授","example":"授業","reading":"じゅぎょう","meaning":"giờ học"},{"stt":28,"kanji":"講","example":"講義","reading":"こうぎ","meaning":"bài giảng"},{"stt":29,"kanji":"義","example":"講義","reading":"こうぎ","meaning":"bài giảng"},{"stt":30,"kanji":"教","example":"教科書","reading":"きょうかしょ","meaning":"sách giáo khoa"},{"stt":31,"kanji":"科","example":"教科書","reading":"きょうかしょ","meaning":"sách giáo khoa"},{"stt":32,"kanji":"書","example":"教科書","reading":"きょうかしょ","meaning":"sách giáo khoa"},{"stt":33,"kanji":"参","example":"参考書","reading":"さんこうしょ","meaning":"sách tham khảo"},{"stt":34,"kanji":"考","example":"参考書","reading":"さんこうしょ","meaning":"sách tham khảo"},{"stt":35,"kanji":"辞","example":"辞書","reading":"じしょ","meaning":"từ điển"},{"stt":36,"kanji":"単","example":"単語","reading":"たんご","meaning":"từ vựng"},{"stt":37,"kanji":"語","example":"単語","reading":"たんご","meaning":"từ vựng"},{"stt":38,"kanji":"文","example":"文法","reading":"ぶんぽう","meaning":"ngữ pháp"},{"stt":39,"kanji":"法","example":"文法","reading":"ぶんぽう","meaning":"ngữ pháp"},{"stt":40,"kanji":"発","example":"発音","reading":"はつおん","meaning":"phát âm"},{"stt":41,"kanji":"音","example":"発音","reading":"はつおん","meaning":"phát âm"},{"stt":42,"kanji":"例","example":"例文","reading":"れいぶん","meaning":"câu ví dụ"},{"stt":43,"kanji":"宿","example":"宿題","reading":"しゅくだい","meaning":"bài tập về nhà"},{"stt":44,"kanji":"題","example":"宿題","reading":"しゅくだい","meaning":"bài tập về nhà"},{"stt":45,"kanji":"提","example":"提出","reading":"ていしゅつ","meaning":"nộp, trình nộp"},{"stt":46,"kanji":"出","example":"提出","reading":"ていしゅつ","meaning":"nộp, trình nộp"},{"stt":47,"kanji":"締","example":"締切","reading":"しめきり","meaning":"hạn chót"},{"stt":48,"kanji":"切","example":"締切","reading":"しめきり","meaning":"hạn chót"},{"stt":49,"kanji":"奨","example":"奨学金","reading":"しょうがくきん","meaning":"học bổng"},{"stt":50,"kanji":"金","example":"奨学金","reading":"しょうがくきん","meaning":"học bổng"},{"stt":51,"kanji":"留","example":"留学","reading":"りゅうがく","meaning":"du học"},{"stt":52,"kanji":"専","example":"専門","reading":"せんもん","meaning":"chuyên môn"},{"stt":53,"kanji":"門","example":"専門","reading":"せんもん","meaning":"chuyên môn"},{"stt":54,"kanji":"研","example":"研究","reading":"けんきゅう","meaning":"nghiên cứu"},{"stt":55,"kanji":"究","example":"研究","reading":"けんきゅう","meaning":"nghiên cứu"},{"stt":56,"kanji":"調","example":"調査","reading":"ちょうさ","meaning":"điều tra, khảo sát"},{"stt":57,"kanji":"査","example":"調査","reading":"ちょうさ","meaning":"điều tra, khảo sát"},{"stt":58,"kanji":"知","example":"知識","reading":"ちしき","meaning":"kiến thức"},{"stt":59,"kanji":"識","example":"知識","reading":"ちしき","meaning":"kiến thức"},{"stt":60,"kanji":"能","example":"能力","reading":"のうりょく","meaning":"năng lực"},{"stt":61,"kanji":"力","example":"能力","reading":"のうりょく","meaning":"năng lực"},{"stt":62,"kanji":"練","example":"練習","reading":"れんしゅう","meaning":"luyện tập"},{"stt":63,"kanji":"訓","example":"訓練","reading":"くんれん","meaning":"huấn luyện"},{"stt":64,"kanji":"育","example":"教育","reading":"きょういく","meaning":"giáo dục"},{"stt":65,"kanji":"課","example":"課題","reading":"かだい","meaning":"bài tập, vấn đề cần giải quyết"},{"stt":66,"kanji":"期","example":"学期","reading":"がっき","meaning":"học kỳ"},{"stt":67,"kanji":"仕","example":"仕事","reading":"しごと","meaning":"công việc"},{"stt":68,"kanji":"事","example":"仕事","reading":"しごと","meaning":"công việc"},{"stt":69,"kanji":"職","example":"職業","reading":"しょくぎょう","meaning":"nghề nghiệp"},{"stt":70,"kanji":"場","example":"職場","reading":"しょくば","meaning":"nơi làm việc"},{"stt":71,"kanji":"会","example":"会社","reading":"かいしゃ","meaning":"công ty"},{"stt":72,"kanji":"社","example":"会社","reading":"かいしゃ","meaning":"công ty"},{"stt":73,"kanji":"議","example":"会議","reading":"かいぎ","meaning":"cuộc họp"},{"stt":74,"kanji":"定","example":"予定","reading":"よてい","meaning":"dự định, lịch trình"},{"stt":75,"kanji":"連","example":"連絡","reading":"れんらく","meaning":"liên lạc"},{"stt":76,"kanji":"絡","example":"連絡","reading":"れんらく","meaning":"liên lạc"},{"stt":77,"kanji":"報","example":"報告","reading":"ほうこく","meaning":"báo cáo"},{"stt":78,"kanji":"告","example":"報告","reading":"ほうこく","meaning":"báo cáo"},{"stt":79,"kanji":"相","example":"相談","reading":"そうだん","meaning":"trao đổi, tư vấn"},{"stt":80,"kanji":"談","example":"相談","reading":"そうだん","meaning":"trao đổi, tư vấn"},{"stt":81,"kanji":"申","example":"申請","reading":"しんせい","meaning":"đăng ký, xin cấp"},{"stt":82,"kanji":"請","example":"申請","reading":"しんせい","meaning":"đăng ký, xin cấp"},{"stt":83,"kanji":"込","example":"申込","reading":"もうしこみ","meaning":"đăng ký"},{"stt":84,"kanji":"付","example":"受付","reading":"うけつけ","meaning":"quầy tiếp nhận, tiếp nhận"},{"stt":85,"kanji":"担","example":"担当","reading":"たんとう","meaning":"phụ trách"},{"stt":86,"kanji":"当","example":"担当","reading":"たんとう","meaning":"phụ trách"},{"stt":87,"kanji":"部","example":"部長","reading":"ぶちょう","meaning":"trưởng phòng"},{"stt":88,"kanji":"長","example":"部長","reading":"ぶちょう","meaning":"trưởng phòng"},{"stt":89,"kanji":"上","example":"上司","reading":"じょうし","meaning":"cấp trên"},{"stt":90,"kanji":"司","example":"上司","reading":"じょうし","meaning":"cấp trên"},{"stt":91,"kanji":"同","example":"同僚","reading":"どうりょう","meaning":"đồng nghiệp"},{"stt":92,"kanji":"僚","example":"同僚","reading":"どうりょう","meaning":"đồng nghiệp"},{"stt":93,"kanji":"就","example":"就職","reading":"しゅうしょく","meaning":"xin việc, đi làm"},{"stt":94,"kanji":"転","example":"転職","reading":"てんしょく","meaning":"chuyển việc"},{"stt":95,"kanji":"通","example":"通勤","reading":"つうきん","meaning":"đi làm hằng ngày"},{"stt":96,"kanji":"勤","example":"通勤","reading":"つうきん","meaning":"đi làm hằng ngày"},{"stt":97,"kanji":"務","example":"勤務","reading":"きんむ","meaning":"làm việc, công tác"},{"stt":98,"kanji":"欠","example":"欠勤","reading":"けっきん","meaning":"nghỉ làm"},{"stt":99,"kanji":"残","example":"残業","reading":"ざんぎょう","meaning":"làm thêm giờ"},{"stt":100,"kanji":"給","example":"給料","reading":"きゅうりょう","meaning":"lương"},{"stt":101,"kanji":"料","example":"給料","reading":"きゅうりょう","meaning":"lương"},{"stt":102,"kanji":"収","example":"収入","reading":"しゅうにゅう","meaning":"thu nhập"},{"stt":103,"kanji":"支","example":"支出","reading":"ししゅつ","meaning":"chi tiêu, khoản chi"},{"stt":104,"kanji":"作","example":"作業","reading":"さぎょう","meaning":"công việc, thao tác"},{"stt":105,"kanji":"資","example":"資料","reading":"しりょう","meaning":"tài liệu"},{"stt":106,"kanji":"類","example":"書類","reading":"しょるい","meaning":"giấy tờ, hồ sơ"},{"stt":107,"kanji":"契","example":"契約","reading":"けいやく","meaning":"hợp đồng"},{"stt":108,"kanji":"約","example":"契約","reading":"けいやく","meaning":"hợp đồng"},{"stt":109,"kanji":"条","example":"条件","reading":"じょうけん","meaning":"điều kiện"},{"stt":110,"kanji":"件","example":"条件","reading":"じょうけん","meaning":"điều kiện"},{"stt":111,"kanji":"経","example":"経験","reading":"けいけん","meaning":"kinh nghiệm"},{"stt":112,"kanji":"技","example":"技術","reading":"ぎじゅつ","meaning":"kỹ thuật"},{"stt":113,"kanji":"術","example":"技術","reading":"ぎじゅつ","meaning":"kỹ thuật"},{"stt":114,"kanji":"張","example":"出張","reading":"しゅっちょう","meaning":"đi công tác"},{"stt":115,"kanji":"休","example":"休暇","reading":"きゅうか","meaning":"kỳ nghỉ"},{"stt":116,"kanji":"暇","example":"休暇","reading":"きゅうか","meaning":"kỳ nghỉ"},{"stt":117,"kanji":"面","example":"面接","reading":"めんせつ","meaning":"phỏng vấn"},{"stt":118,"kanji":"接","example":"面接","reading":"めんせつ","meaning":"phỏng vấn"},{"stt":119,"kanji":"採","example":"採用","reading":"さいよう","meaning":"tuyển dụng"},{"stt":120,"kanji":"用","example":"採用","reading":"さいよう","meaning":"tuyển dụng"},{"stt":121,"kanji":"退","example":"退職","reading":"たいしょく","meaning":"nghỉ việc"},{"stt":122,"kanji":"責","example":"責任","reading":"せきにん","meaning":"trách nhiệm"},{"stt":123,"kanji":"任","example":"責任","reading":"せきにん","meaning":"trách nhiệm"},{"stt":124,"kanji":"生","example":"生活","reading":"せいかつ","meaning":"cuộc sống, sinh hoạt"},{"stt":125,"kanji":"活","example":"生活","reading":"せいかつ","meaning":"cuộc sống, sinh hoạt"},{"stt":126,"kanji":"慣","example":"習慣","reading":"しゅうかん","meaning":"thói quen, tập quán"},{"stt":127,"kanji":"度","example":"支度","reading":"したく","meaning":"chuẩn bị"},{"stt":128,"kanji":"準","example":"準備","reading":"じゅんび","meaning":"chuẩn bị"},{"stt":129,"kanji":"備","example":"準備","reading":"じゅんび","meaning":"chuẩn bị"},{"stt":130,"kanji":"片","example":"片付け","reading":"かたづけ","meaning":"dọn dẹp"},{"stt":131,"kanji":"掃","example":"掃除","reading":"そうじ","meaning":"dọn vệ sinh"},{"stt":132,"kanji":"除","example":"掃除","reading":"そうじ","meaning":"dọn vệ sinh"},{"stt":133,"kanji":"洗","example":"洗濯","reading":"せんたく","meaning":"giặt giũ"},{"stt":134,"kanji":"濯","example":"洗濯","reading":"せんたく","meaning":"giặt giũ"},{"stt":135,"kanji":"食","example":"食事","reading":"しょくじ","meaning":"bữa ăn"},{"stt":136,"kanji":"買","example":"買い物","reading":"かいもの","meaning":"mua sắm"},{"stt":137,"kanji":"物","example":"買い物","reading":"かいもの","meaning":"mua sắm"},{"stt":138,"kanji":"払","example":"支払い","reading":"しはらい","meaning":"thanh toán"},{"stt":139,"kanji":"家","example":"家賃","reading":"やちん","meaning":"tiền thuê nhà"},{"stt":140,"kanji":"賃","example":"家賃","reading":"やちん","meaning":"tiền thuê nhà"},{"stt":141,"kanji":"住","example":"住所","reading":"じゅうしょ","meaning":"địa chỉ"},{"stt":142,"kanji":"所","example":"住所","reading":"じゅうしょ","meaning":"địa chỉ"},{"stt":143,"kanji":"引","example":"引越し","reading":"ひっこし","meaning":"chuyển nhà"},{"stt":144,"kanji":"越","example":"引越し","reading":"ひっこし","meaning":"chuyển nhà"},{"stt":145,"kanji":"守","example":"留守","reading":"るす","meaning":"vắng nhà"},{"stt":146,"kanji":"玄","example":"玄関","reading":"げんかん","meaning":"lối vào nhà"},{"stt":147,"kanji":"関","example":"玄関","reading":"げんかん","meaning":"lối vào nhà"},{"stt":148,"kanji":"台","example":"台所","reading":"だいどころ","meaning":"nhà bếp"},{"stt":149,"kanji":"浴","example":"浴室","reading":"よくしつ","meaning":"phòng tắm"},{"stt":150,"kanji":"室","example":"浴室","reading":"よくしつ","meaning":"phòng tắm"},{"stt":151,"kanji":"冷","example":"冷蔵庫","reading":"れいぞうこ","meaning":"tủ lạnh"},{"stt":152,"kanji":"蔵","example":"冷蔵庫","reading":"れいぞうこ","meaning":"tủ lạnh"},{"stt":153,"kanji":"庫","example":"冷蔵庫","reading":"れいぞうこ","meaning":"tủ lạnh"},{"stt":154,"kanji":"暖","example":"暖房","reading":"だんぼう","meaning":"sưởi ấm"},{"stt":155,"kanji":"房","example":"暖房","reading":"だんぼう","meaning":"sưởi ấm"},{"stt":156,"kanji":"具","example":"家具","reading":"かぐ","meaning":"đồ nội thất"},{"stt":157,"kanji":"近","example":"近所","reading":"きんじょ","meaning":"hàng xóm, khu lân cận"},{"stt":158,"kanji":"番","example":"留守番","reading":"るすばん","meaning":"trông nhà"},{"stt":159,"kanji":"故","example":"故障","reading":"こしょう","meaning":"hỏng hóc"},{"stt":160,"kanji":"障","example":"故障","reading":"こしょう","meaning":"hỏng hóc"},{"stt":161,"kanji":"修","example":"修理","reading":"しゅうり","meaning":"sửa chữa"},{"stt":162,"kanji":"電","example":"電源","reading":"でんげん","meaning":"nguồn điện"},{"stt":163,"kanji":"源","example":"電源","reading":"でんげん","meaning":"nguồn điện"},{"stt":164,"kanji":"池","example":"電池","reading":"でんち","meaning":"pin"},{"stt":165,"kanji":"荷","example":"荷物","reading":"にもつ","meaning":"hành lý, đồ đạc"},{"stt":166,"kanji":"宅","example":"宅配便","reading":"たくはいびん","meaning":"dịch vụ giao hàng"},{"stt":167,"kanji":"配","example":"宅配便","reading":"たくはいびん","meaning":"dịch vụ giao hàng"},{"stt":168,"kanji":"便","example":"宅配便","reading":"たくはいびん","meaning":"dịch vụ giao hàng"},{"stt":169,"kanji":"郵","example":"郵便","reading":"ゆうびん","meaning":"bưu điện, thư tín"},{"stt":170,"kanji":"届","example":"届く","reading":"とどく","meaning":"được gửi tới, tới nơi"},{"stt":171,"kanji":"保","example":"保存","reading":"ほぞん","meaning":"bảo quản, lưu"},{"stt":172,"kanji":"存","example":"保存","reading":"ほぞん","meaning":"bảo quản, lưu"},{"stt":173,"kanji":"捨","example":"捨てる","reading":"すてる","meaning":"vứt bỏ"},{"stt":174,"kanji":"拾","example":"拾う","reading":"ひろう","meaning":"nhặt lên"},{"stt":175,"kanji":"壊","example":"壊れる","reading":"こわれる","meaning":"bị hỏng"},{"stt":176,"kanji":"交","example":"交通","reading":"こうつう","meaning":"giao thông"},{"stt":177,"kanji":"車","example":"電車","reading":"でんしゃ","meaning":"tàu điện"},{"stt":178,"kanji":"地","example":"地下鉄","reading":"ちかてつ","meaning":"tàu điện ngầm"},{"stt":179,"kanji":"下","example":"地下鉄","reading":"ちかてつ","meaning":"tàu điện ngầm"},{"stt":180,"kanji":"鉄","example":"地下鉄","reading":"ちかてつ","meaning":"tàu điện ngầm"}];
+const QUIZZES = [[{"num":1,"section":"問題1 漢字読み","text":"試験の成績が昨日発表されました。","options":["せいせき","せいせ","ぜいせき","せせき"],"answer":1},{"num":2,"section":"問題1 漢字読み","text":"駅には午後三時に到着する予定です。","options":["じゅうみん","とうちゃく","とうちゃ","とちゃく"],"answer":2},{"num":3,"section":"問題1 漢字読み","text":"二つの文化には共通する点があります。","options":["きょうつう","きょうちう","こうつう","きょうつ"],"answer":1},{"num":4,"section":"問題1 漢字読み","text":"来月から税金が変わるそうです。","options":["でんげん","ぜきん","ぜいき","ぜいきん"],"answer":4},{"num":5,"section":"問題1 漢字読み","text":"毎週、防災訓練を行っています。","options":["くれん","くんれん","くんれ","こうきょう"],"answer":2},{"num":6,"section":"問題1 漢字読み","text":"大学の奨学金に申し込みました。","options":["しょうがくきん","しょがくきん","しょうがくき","じょうがくきん"],"answer":1},{"num":7,"section":"問題1 漢字読み","text":"日本の首都について調べています。","options":["しと","しゅ","じゅと","しゅと"],"answer":4},{"num":8,"section":"問題1 漢字読み","text":"レポートは金曜日までに提出してください。","options":["ていしゅつ","てしゅつ","ていじゅつ","ていしゅち"],"answer":1},{"num":9,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：がくしゅう","options":["接続","教育","学習","別に"],"answer":3},{"num":10,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：ふくしゅう","options":["治療","減る","復習","地震"],"answer":3},{"num":11,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：あんき","options":["地震","暗記","調査","許す"],"answer":2},{"num":12,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：せつめい","options":["機械","説明","面接","会議"],"answer":2},{"num":13,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：こたえ","options":["記事","品物","答え","距離"],"answer":3},{"num":14,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：しけん","options":["留学","試験","故障","人口"],"answer":2},{"num":15,"section":"問題3 文脈規定","text":"駅前に新しい店ができるという（　）を聞きました。","options":["伝える","駐車","絶対に","うわさ"],"answer":4},{"num":16,"section":"問題3 文脈規定","text":"遠いところから（　）来てくださって、ありがとうございます。","options":["首都","わざわざ","修理","尊敬"],"answer":2},{"num":17,"section":"問題3 文脈規定","text":"この町は駅ができてから急速に（　）しました。","options":["当然","玄関","発展","電子"],"answer":3},{"num":18,"section":"問題3 文脈規定","text":"最近、食べ物の（　）が上がって、生活費が増えました。","options":["痛み","間違える","物価","期限"],"answer":3},{"num":19,"section":"問題3 文脈規定","text":"バスの（　）は駅から空港まで千円です。","options":["信頼","運賃","ニュース","番号"],"answer":2},{"num":20,"section":"問題3 文脈規定","text":"医者に自分の（　）を詳しく説明しました。","options":["教科書","たいてい","症状","玄関"],"answer":3},{"num":21,"section":"問題3 文脈規定","text":"スマホの言語（　）を日本語に変えました。","options":["設定","会計","貯める","のど"],"answer":1},{"num":22,"section":"問題3 文脈規定","text":"この機械は使い方が（　）なので、説明書をよく読んでください。","options":["洗濯","複雑","上下","完成する"],"answer":2},{"num":23,"section":"問題3 文脈規定","text":"駅に新しい商品の（　）が大きく出ています。","options":["広告","動画","家賃","以下"],"answer":1},{"num":24,"section":"問題3 文脈規定","text":"仕事が多くて、昨日は夜九時まで（　）しました。","options":["残業","徐々に","結果","未満"],"answer":1},{"num":25,"section":"問題3 文脈規定","text":"会議で使う（　）を人数分コピーしておいてください。","options":["痛み","資料","未満","速い"],"answer":2},{"num":26,"section":"問題4 言い換え類義","text":"「以外」と意味が最も近いものはどれですか。","options":["それを除いて","前に","少しずつ","急に"],"answer":1},{"num":27,"section":"問題4 言い換え類義","text":"「たいてい」と意味が最も近いものはどれですか。","options":["すべて","少なくなる","ほとんどの場合","前に"],"answer":3},{"num":28,"section":"問題4 言い換え類義","text":"「周辺」と意味が最も近いものはどれですか。","options":["まわり","残る","ほとんどの場合","もちろんそうだ"],"answer":1},{"num":29,"section":"問題4 言い換え類義","text":"「偶然」と意味が最も近いものはどれですか。","options":["出発する人を送る","とても怖い","たまたま","その範囲を超えない"],"answer":3},{"num":30,"section":"問題4 言い換え類義","text":"「修理する」と意味が最も近いものはどれですか。","options":["確認する","それを除いて","壊れた物を直す","すべて"],"answer":3},{"num":31,"section":"問題5 用法","text":"「余る」","options":["ケーキを買いすぎて、三つ余りました。","駅まで余るを一枚飲みました。","私は毎朝余るが青いです。","昨日の天気は余るに座っていました。"],"answer":1},{"num":32,"section":"問題5 用法","text":"「届く」","options":["駅まで届くを一枚飲みました。","昨日の天気は届くに座っていました。","注文した本が昨日家に届きました。","朝ご飯を届くしてから、学校へ行きました。"],"answer":3},{"num":33,"section":"問題5 用法","text":"「認める」","options":["この料理を認めるから、電車に乗ります。","先生は彼の努力を認めました。","朝ご飯を認めるしてから、学校へ行きました。","先生は黒板を認めるの三時です。"],"answer":2},{"num":34,"section":"問題5 用法","text":"「貯める」","options":["先生は黒板を貯めるの三時です。","旅行のために毎月少しずつお金を貯めています。","駅まで貯めるを一枚飲みました。","この料理を貯めるから、電車に乗ります。"],"answer":2},{"num":35,"section":"問題5 用法","text":"「わざわざ」","options":["駅までわざわざを一枚飲みました。","昨日の天気はわざわざに座っていました。","彼はわざわざ駅まで迎えに来てくれました。","先生は黒板をわざわざの三時です。"],"answer":3}],[{"num":1,"section":"問題1 漢字読み","text":"午後は大学で経済の講義を受けます。","options":["こぎ","こうぎ","こう","きょうぎ"],"answer":2},{"num":2,"section":"問題1 漢字読み","text":"仕事には専門的な知識が必要です。","options":["ちしき","ちじき","ちき","ちし"],"answer":1},{"num":3,"section":"問題1 漢字読み","text":"大学院で環境問題を研究しています。","options":["けんきゅ","けきゅう","けんきゅう","でんしゃ"],"answer":3},{"num":4,"section":"問題1 漢字読み","text":"この件の担当は山田さんです。","options":["たんとう","たとう","だんとう","たんと"],"answer":1},{"num":5,"section":"問題1 漢字読み","text":"新しい会社と契約を結びました。","options":["はじめる","けいや","けやく","けいやく"],"answer":4},{"num":6,"section":"問題1 漢字読み","text":"昨日は仕事が多くて残業しました。","options":["ざんぎょ","ざんぎょう","えいよう","ざぎょう"],"answer":2},{"num":7,"section":"問題1 漢字読み","text":"来年の新入社員を採用する予定です。","options":["さいよ","さいよう","ぎじゅつ","さよう"],"answer":2},{"num":8,"section":"問題1 漢字読み","text":"来月、駅の近くへ引越しします。","options":["ひこし","ひっこじ","ひっこし","ひっこ"],"answer":3},{"num":9,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：ふごうかく","options":["別れる","予約席","不合格","加える"],"answer":3},{"num":10,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：にゅうがく","options":["面接","授業","往復","入学"],"answer":4},{"num":11,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：じゅぎょう","options":["運動","授業","急に","可能"],"answer":2},{"num":12,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：きょうかしょ","options":["教科書","借りる","始める","留守番"],"answer":1},{"num":13,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：じしょ","options":["農業","到着","不満","辞書"],"answer":4},{"num":14,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：ぶんぽう","options":["文法","授業","郵便","残り"],"answer":1},{"num":15,"section":"問題3 文脈規定","text":"値段だけでなく、商品の（　）も確認したほうがいいです。","options":["品質","電源","電池","運転"],"answer":1},{"num":16,"section":"問題3 文脈規定","text":"長い時間同じ（　）で座っていたので、腰が痛くなりました。","options":["社会","姿勢","申請","不合格"],"answer":2},{"num":17,"section":"問題3 文脈規定","text":"これはまだ誰にも言わないでください。（　）ですよ。","options":["内緒","担当","インタビュー","説明書"],"answer":1},{"num":18,"section":"問題3 文脈規定","text":"この薬は開けてから一週間（　）に使ってください。","options":["以内","失礼","機械","忘れる"],"answer":1},{"num":19,"section":"問題3 文脈規定","text":"日本の生活に（　）まで、少し時間がかかりました。","options":["曲げる","慣れる","約束","受験"],"answer":2},{"num":20,"section":"問題3 文脈規定","text":"彼は自分のミスを（　）、みんなに謝りました。","options":["約","疑問","認める","関係"],"answer":3},{"num":21,"section":"問題3 文脈規定","text":"この駅で地下鉄に（　）をしてください。","options":["便利","乗換","都会","調査"],"answer":2},{"num":22,"section":"問題3 文脈規定","text":"この店では海外から（　）した食品を売っています。","options":["借りる","輸入","比べる","在庫"],"answer":2},{"num":23,"section":"問題3 文脈規定","text":"来週、新しい会社の（　）を受ける予定です。","options":["すでに","面接","商品","別れる"],"answer":2},{"num":24,"section":"問題3 文脈規定","text":"新しいサービスを使うには、最初に会員（　）が必要です。","options":["横断禁止","配達","診察","登録"],"answer":4},{"num":25,"section":"問題3 文脈規定","text":"旅行先で高校時代の友達に（　）会いました。","options":["地下鉄","謝る","用事","偶然"],"answer":4},{"num":26,"section":"問題4 言い換え類義","text":"「わざわざ」と意味が最も近いものはどれですか。","options":["参加の手続きをする","特別に時間や手間をかけて","受けないと言う","もちろんそうだ"],"answer":2},{"num":27,"section":"問題4 言い換え類義","text":"「不満」と意味が最も近いものはどれですか。","options":["壊れた物を直す","足りない","満足していない気持ち","特別に時間や手間をかけて"],"answer":3},{"num":28,"section":"問題4 言い換え類義","text":"「断る」と意味が最も近いものはどれですか。","options":["確認する","他のものに与える変化","受けないと言う","使う"],"answer":3},{"num":29,"section":"問題4 言い換え類義","text":"「不足する」と意味が最も近いものはどれですか。","options":["とても怖い","その範囲を超えない","足りない","簡単ではない"],"answer":3},{"num":30,"section":"問題4 言い換え類義","text":"「がっかり」と意味が最も近いものはどれですか。","options":["急に","特別に時間や手間をかけて","壊れた物を直す","残念に思う"],"answer":4},{"num":31,"section":"問題5 用法","text":"「慣れる」","options":["駅まで慣れるを一枚飲みました。","私は毎朝慣れるが青いです。","新しい仕事に慣れるまで一か月かかりました。","昨日の天気は慣れるに座っていました。"],"answer":3},{"num":32,"section":"問題5 用法","text":"「任せる」","options":["先生は黒板を任せるの三時です。","朝ご飯を任せるしてから、学校へ行きました。","この仕事は経験のある人に任せましょう。","駅まで任せるを一枚飲みました。"],"answer":3},{"num":33,"section":"問題5 用法","text":"「断る」","options":["駅まで断るを一枚飲みました。","この料理を断るから、電車に乗ります。","朝ご飯を断るしてから、学校へ行きました。","予定があったので、その誘いを断りました。"],"answer":4},{"num":34,"section":"問題5 用法","text":"「含む」","options":["この鉛筆はとても含むので、三本買いました。","私は毎朝含むが青いです。","机の上に含むを眠りました。","この料金には朝食代も含まれています。"],"answer":4},{"num":35,"section":"問題5 用法","text":"「すでに」","options":["この料理をすでにから、電車に乗ります。","駅まですでにを一枚飲みました。","昨日の天気はすでにに座っていました。","その映画はすでに三回見ました。"],"answer":4}],[{"num":1,"section":"問題1 漢字読み","text":"洗濯機が故障して動きません。","options":["こしょ","こしょう","こじょう","こょう"],"answer":2},{"num":2,"section":"問題1 漢字読み","text":"壊れた自転車を修理してもらいました。","options":["しゅうり","しゅり","しうり","じゅうり"],"answer":1},{"num":3,"section":"問題1 漢字読み","text":"大切な写真をパソコンに保存しました。","options":["ほぞ","たすける","ほん","ほぞん"],"answer":4},{"num":4,"section":"問題1 漢字読み","text":"朝は道路が渋滞しています。","options":["じうたい","じゅうたい","じゅうだい","じゅうた"],"answer":2},{"num":5,"section":"問題1 漢字読み","text":"空港までの運賃を調べました。","options":["うちん","うんちん","んちん","うんち"],"answer":2},{"num":6,"section":"問題1 漢字読み","text":"旅行では京都に二日宿泊します。","options":["しゅくはく","しゅくは","じゅくはく","しくはく"],"answer":1},{"num":7,"section":"問題1 漢字読み","text":"ここで道路を横断してはいけません。","options":["おうだん","おうだ","おだん","でんち"],"answer":1},{"num":8,"section":"問題1 漢字読み","text":"医者に症状を詳しく説明しました。","options":["しょうじょう","しょうじょ","じょうじょう","しょじょう"],"answer":1},{"num":9,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：れいぶん","options":["保存","様子","例文","以下"],"answer":3},{"num":10,"section":"問題2 表記","text":"レポートは金曜日までにていしゅつしてください。","options":["間隔","提出","栄養","確認"],"answer":2},{"num":11,"section":"問題2 表記","text":"大学のしょうがくきんに申し込みました。","options":["起こす","仲良し","新幹線","奨学金"],"answer":4},{"num":12,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：せんもん","options":["実際","横断","辞書","専門"],"answer":4},{"num":13,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：ちょうさ","options":["返品","受付","上司","調査"],"answer":4},{"num":14,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：のうりょく","options":["観客","能力","信用","乗客"],"answer":2},{"num":15,"section":"問題3 文脈規定","text":"私は毎朝電車で会社に（　）しています。","options":["通勤","理解","伝統","習慣"],"answer":1},{"num":16,"section":"問題3 文脈規定","text":"日本語のスピーチ大会に（　）ました。","options":["危険","宿泊","成績","申し込む"],"answer":4},{"num":17,"section":"問題3 文脈規定","text":"子どもたちのために、きれいな（　）を守る必要があります。","options":["広告","輸出","番組","環境"],"answer":4},{"num":18,"section":"問題3 文脈規定","text":"事故の（　）を警察が調べています。","options":["浅い","連絡","原因","発見する"],"answer":3},{"num":19,"section":"問題3 文脈規定","text":"昨夜、大きな（　）があり、電車が止まりました。","options":["珍しい","地震","範囲","そろそろ"],"answer":2},{"num":20,"section":"問題3 文脈規定","text":"二つの商品を（　）してから、どちらを買うか決めます。","options":["復習","比較","留守番","首都"],"answer":2},{"num":21,"section":"問題3 文脈規定","text":"料理を作りすぎて、少し（　）しまいました。","options":["気分","アプリ","工業","余る"],"answer":4},{"num":22,"section":"問題3 文脈規定","text":"台風の（　）で、多くの電車が止まりました。","options":["影響","がらがら","丈夫","間違いない"],"answer":1},{"num":23,"section":"問題3 文脈規定","text":"注文した荷物は明日の午前中に（　）されるそうです。","options":["配達","終わる","主張","職場"],"answer":1},{"num":24,"section":"問題3 文脈規定","text":"梅雨の時期は（　）が高く、蒸し暑い日が続きます。","options":["距離","情報","材料","湿度"],"answer":4},{"num":25,"section":"問題3 文脈規定","text":"急げば九時の電車に（　）と思います。","options":["怪我","間に合う","電子","考え"],"answer":2},{"num":26,"section":"問題4 言い換え類義","text":"「すぐ」と意味が最も近いものはどれですか。","options":["参加の手続きをする","まもなく","見つける","足りない"],"answer":2},{"num":27,"section":"問題4 言い換え類義","text":"「確かめる」と意味が最も近いものはどれですか。","options":["特別に時間や手間をかけて","使う","確認する","残る"],"answer":3},{"num":28,"section":"問題4 言い換え類義","text":"「恐ろしい」と意味が最も近いものはどれですか。","options":["すべて","とても怖い","前に","急に"],"answer":2},{"num":29,"section":"問題4 言い換え類義","text":"「安心する」と意味が最も近いものはどれですか。","options":["会社へ通う","心配がなくなる","ほとんどの場合","それを除いて"],"answer":2},{"num":30,"section":"問題4 言い換え類義","text":"「以前」と意味が最も近いものはどれですか。","options":["その範囲を超えない","前に","うそを言わない","満足していない気持ち"],"answer":2},{"num":31,"section":"問題5 用法","text":"「除く」","options":["私は毎朝除くが青いです。","この鉛筆はとても除くので、三本買いました。","日曜日を除く毎日、店は開いています。","昨日の天気は除くに座っていました。"],"answer":3},{"num":32,"section":"問題5 用法","text":"「せっかく」","options":["この鉛筆はとてもせっかくので、三本買いました。","せっかく京都まで来たので、お寺を見に行きましょう。","駅までせっかくを一枚飲みました。","この料理をせっかくから、電車に乗ります。"],"answer":2},{"num":33,"section":"問題5 用法","text":"「徐々に」","options":["机の上に徐々にを眠りました。","薬を飲んだら、痛みが徐々に軽くなりました。","昨日の天気は徐々にに座っていました。","先生は黒板を徐々にの三時です。"],"answer":2},{"num":34,"section":"問題5 用法","text":"「割合」","options":["机の上に割合を眠りました。","朝ご飯を割合してから、学校へ行きました。","この店では外国人客の割合が高いです。","昨日の天気は割合に座っていました。"],"answer":3},{"num":35,"section":"問題5 用法","text":"「影響」","options":["私は毎朝影響が青いです。","大雨の影響で飛行機が遅れました。","朝ご飯を影響してから、学校へ行きました。","この鉛筆はとても影響ので、三本買いました。"],"answer":2}],[{"num":1,"section":"問題1 漢字読み","text":"病院でしばらく治療を受けます。","options":["ちりょう","ちりょ","せまい","ちょう"],"answer":1},{"num":2,"section":"問題1 漢字読み","text":"健康のために栄養のバランスを考えています。","options":["えいよ","えいよう","けんきゅう","えよう"],"answer":2},{"num":3,"section":"問題1 漢字読み","text":"今日は気温も湿度も高いです。","options":["しつど","しど","しちど","しつ"],"answer":1},{"num":4,"section":"問題1 漢字読み","text":"新しい法律についてニュースで説明していました。","options":["ほうり","ほりつ","ほうりち","ほうりつ"],"answer":4},{"num":5,"section":"問題1 漢字読み","text":"この会社は車を海外へ輸出しています。","options":["ゆしゅ","ゆゅつ","ゆしゅち","ゆしゅつ"],"answer":4},{"num":6,"section":"問題1 漢字読み","text":"地球の資源を大切に使いましょう。","options":["しげん","じげん","しん","しげ"],"answer":1},{"num":7,"section":"問題1 漢字読み","text":"近くの住民が公園を掃除しました。","options":["じゅうみん","じゅうみ","じうみん","じゅみん"],"answer":1},{"num":8,"section":"問題1 漢字読み","text":"私は祖父をとても尊敬しています。","options":["そんけ","そんけい","そけい","あまる"],"answer":2},{"num":9,"section":"問題2 表記","text":"毎週、防災くんれんを行っています。","options":["訓練","留守","偶然","用事"],"answer":1},{"num":10,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：かだい","options":["現実","課題","渡る","予算"],"answer":2},{"num":11,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：しごと","options":["教育","仕事","姿勢","輸出"],"answer":2},{"num":12,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：しょくば","options":["電子","職場","成績","退職"],"answer":2},{"num":13,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：かいぎ","options":["横断","地域","会議","値段"],"answer":3},{"num":14,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：れんらく","options":["駐車","宿泊","連絡","余分"],"answer":3},{"num":15,"section":"問題3 文脈規定","text":"無事に到着したという連絡を聞いて（　）しました。","options":["間隔","安心","たまたま","条件"],"answer":2},{"num":16,"section":"問題3 文脈規定","text":"この地域では医者が（　）しているそうです。","options":["減る","家賃","不足","住民"],"answer":3},{"num":17,"section":"問題3 文脈規定","text":"駅の（　）には飲食店がたくさんあります。","options":["伝統","周辺","完成する","正直"],"answer":2},{"num":18,"section":"問題3 文脈規定","text":"セミナーに参加する人は、この（　）に名前と住所を書いてください。","options":["のど","割引","申込書","注文"],"answer":3},{"num":19,"section":"問題3 文脈規定","text":"朝は道路が（　）しているので、いつも早めに家を出ます。","options":["欠勤","渋滞","左右","物価"],"answer":2},{"num":20,"section":"問題3 文脈規定","text":"必要のないファイルを（　）しました。","options":["希望","出張","慰める","削除"],"answer":4},{"num":21,"section":"問題3 文脈規定","text":"この公園は近くの（　）がよく利用しています。","options":["住民","入力","最初","姿勢"],"answer":1},{"num":22,"section":"問題3 文脈規定","text":"人気の商品なので、店に（　）がほとんどありません。","options":["社会","空港","在庫","分ける"],"answer":3},{"num":23,"section":"問題3 文脈規定","text":"分からない言葉をインターネットで（　）しました。","options":["電源","転職","検索","品質"],"answer":3},{"num":24,"section":"問題3 文脈規定","text":"明日の予定はまだ（　）ではありません。","options":["報告","確実","以下","運転"],"answer":2},{"num":25,"section":"問題3 文脈規定","text":"私はいつも努力している母を（　）しています。","options":["尊敬","用意","落ちる","左右"],"answer":1},{"num":26,"section":"問題4 言い換え類義","text":"「余る」と意味が最も近いものはどれですか。","options":["会社へ通う","足りない","ほとんどの場合","残る"],"answer":4},{"num":27,"section":"問題4 言い換え類義","text":"「申し込む」と意味が最も近いものはどれですか。","options":["参加の手続きをする","受けないと言う","それを除いて","少しずつ"],"answer":1},{"num":28,"section":"問題4 言い換え類義","text":"「見送る」と意味が最も近いものはどれですか。","options":["出発する人を送る","足りない","残る","ほとんどの場合"],"answer":1},{"num":29,"section":"問題4 言い換え類義","text":"「突然」と意味が最も近いものはどれですか。","options":["それを除いて","使う","急に","参加の手続きをする"],"answer":3},{"num":30,"section":"問題4 言い換え類義","text":"「当然」と意味が最も近いものはどれですか。","options":["もちろんそうだ","残念に思う","特別に時間や手間をかけて","参加の手続きをする"],"answer":1},{"num":31,"section":"問題5 用法","text":"「迷う」","options":["この鉛筆はとても迷うので、三本買いました。","朝ご飯を迷うしてから、学校へ行きました。","道が分からなくなって、駅の近くで迷いました。","この料理を迷うから、電車に乗ります。"],"answer":3},{"num":32,"section":"問題5 用法","text":"「ほとんど」","options":["先生は黒板をほとんどの三時です。","昨日の天気はほとんどに座っていました。","この鉛筆はとてもほとんどので、三本買いました。","宿題はほとんど終わりました。"],"answer":4},{"num":33,"section":"問題5 用法","text":"「確かめる」","options":["駅まで確かめるを一枚飲みました。","机の上に確かめるを眠りました。","この鉛筆はとても確かめるので、三本買いました。","出かける前に、窓を閉めたか確かめました。"],"answer":4},{"num":34,"section":"問題5 用法","text":"「支える」","options":["この鉛筆はとても支えるので、三本買いました。","私は毎朝支えるが青いです。","家族がいつも私の勉強を支えてくれます。","先生は黒板を支えるの三時です。"],"answer":3},{"num":35,"section":"問題5 用法","text":"「申請」","options":["私は毎朝申請が青いです。","この料理を申請から、電車に乗ります。","ビザの申請に必要な書類を集めています。","朝ご飯を申請してから、学校へ行きました。"],"answer":3}],[{"num":1,"section":"問題1 漢字読み","text":"落ち込んでいる友達を慰めました。","options":["なぐさめる","なさめる","なぐさめ","そろそろ"],"answer":1},{"num":2,"section":"問題1 漢字読み","text":"長い時間をかけて相手の信用を得ました。","options":["じんよう","しんよう","しんよ","しよう"],"answer":2},{"num":3,"section":"問題1 漢字読み","text":"どうぞ遠慮しないで食べてください。","options":["えんり","さぎょう","えんりょ","えりょ"],"answer":3},{"num":4,"section":"問題1 漢字読み","text":"台風の影響で電車が止まりました。","options":["えきょう","えいきょ","えいきょう","えいこう"],"answer":3},{"num":5,"section":"問題1 漢字読み","text":"この町は観光で大きく発展しました。","options":["はてん","はって","せんもん","はってん"],"answer":4},{"num":6,"section":"問題1 漢字読み","text":"二つの商品を比較して選びました。","options":["ひがく","ひかく","ひく","ひか"],"answer":2},{"num":7,"section":"問題1 漢字読み","text":"テストの範囲は50ページまでです。","options":["じゅんび","はんい","はん","はい"],"answer":2},{"num":8,"section":"問題1 漢字読み","text":"彼は自分の失敗を認めました。","options":["しょくば","みめる","みとめる","みとめ"],"answer":3},{"num":9,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：そうだん","options":["急ぐ","突然","相談","書類"],"answer":3},{"num":10,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：もうしこみ","options":["申込","距離","浴室","面接"],"answer":1},{"num":11,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：うけつけ","options":["便利","受付","予約","食事"],"answer":2},{"num":12,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：ぶちょう","options":["正確","検索","部長","価格"],"answer":3},{"num":13,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：どうりょう","options":["同僚","学期","市場","用事"],"answer":1},{"num":14,"section":"問題2 表記","text":"次のことばを漢字で書くとき、最もよいものを選んでください：てんしょく","options":["様子","広告","転職","試験"],"answer":3},{"num":15,"section":"問題3 文脈規定","text":"この問題については受付ではなく、（　）の人に聞いてください。","options":["課題","担当","遅刻","起こる"],"answer":2},{"num":16,"section":"問題3 文脈規定","text":"試験に落ちて落ち込んでいる友達を（　）ました。","options":["営業","慰める","通行","習慣"],"answer":2},{"num":17,"section":"問題3 文脈規定","text":"この写真を見ると、子どものころのことを（　）ます。","options":["悩む","防ぐ","程度","思い出す"],"answer":4},{"num":18,"section":"問題3 文脈規定","text":"このかばんは軽くて丈夫なのが大きな（　）です。","options":["人口","乗客","特長","以外"],"answer":3},{"num":19,"section":"問題3 文脈規定","text":"夏の（　）を利用して、家族と北海道へ行きます。","options":["学習","休暇","冷房","健康"],"answer":2},{"num":20,"section":"問題3 文脈規定","text":"エアコンが（　）して、動かなくなりました。","options":["作業","徐々に","珍しい","故障"],"answer":4},{"num":21,"section":"問題3 文脈規定","text":"分からないことがあったら、（　）しないで質問してください。","options":["切符","遠慮","空港","登録"],"answer":2},{"num":22,"section":"問題3 文脈規定","text":"会議では自分の意見をはっきり（　）することも大切です。","options":["サイズ","眠る","記事","主張"],"answer":4},{"num":23,"section":"問題3 文脈規定","text":"学生証を見せると、入場料が二割（　）になります。","options":["思い出す","準備","治る","割引"],"answer":4},{"num":24,"section":"問題3 文脈規定","text":"この仕事は経験のある田中さんに（　）ことにしました。","options":["メール","戻る","平均","任せる"],"answer":4},{"num":25,"section":"問題3 文脈規定","text":"書類に間違いがないか、もう一度（　）から出してください。","options":["怒る","見つける","保存","確かめる"],"answer":4},{"num":26,"section":"問題4 言い換え類義","text":"「通勤する」と意味が最も近いものはどれですか。","options":["会社へ通う","他のものに与える変化","出発する人を送る","残る"],"answer":1},{"num":27,"section":"問題4 言い換え類義","text":"「以内」と意味が最も近いものはどれですか。","options":["ほとんどの場合","会社へ通う","確認する","その範囲を超えない"],"answer":4},{"num":28,"section":"問題4 言い換え類義","text":"「正直」と意味が最も近いものはどれですか。","options":["うそを言わない","心配がなくなる","とても怖い","残念に思う"],"answer":1},{"num":29,"section":"問題4 言い換え類義","text":"「減る」と意味が最も近いものはどれですか。","options":["特別に時間や手間をかけて","少なくなる","足りない","残る"],"answer":2},{"num":30,"section":"問題4 言い換え類義","text":"「複雑」と意味が最も近いものはどれですか。","options":["まわり","出発する人を送る","残念に思う","簡単ではない"],"answer":4},{"num":31,"section":"問題5 用法","text":"「範囲」","options":["試験の範囲を先生に確認しました。","この料理を範囲から、電車に乗ります。","朝ご飯を範囲してから、学校へ行きました。","先生は黒板を範囲の三時です。"],"answer":1},{"num":32,"section":"問題5 用法","text":"「防ぐ」","options":["私は毎朝防ぐが青いです。","机の上に防ぐを眠りました。","朝ご飯を防ぐしてから、学校へ行きました。","手をよく洗うことは病気を防ぐのに役立ちます。"],"answer":4},{"num":33,"section":"問題5 用法","text":"「担当」","options":["駅まで担当を一枚飲みました。","この料理を担当から、電車に乗ります。","昨日の天気は担当に座っていました。","この商品の担当は山田さんです。"],"answer":4},{"num":34,"section":"問題5 用法","text":"「見送る」","options":["私は毎朝見送るが青いです。","机の上に見送るを眠りました。","駅で海外へ行く友達を見送りました。","昨日の天気は見送るに座っていました。"],"answer":3},{"num":35,"section":"問題5 用法","text":"「避ける」","options":["昨日の天気は避けるに座っていました。","この料理を避けるから、電車に乗ります。","混んでいる時間を避けて、買い物に行きました。","私は毎朝避けるが青いです。"],"answer":3}]];
+
+const SECTION_HINTS = {
+  "問題1 漢字読み": "Chọn cách đọc đúng của từ được viết bằng Kanji.",
+  "問題2 表記": "Chọn cách viết Kanji đúng cho từ được viết bằng hiragana.",
+  "問題3 文脈規定": "Chọn từ phù hợp nhất với ngữ cảnh.",
+  "問題4 言い換え類義": "Chọn cách diễn đạt có nghĩa gần nhất.",
+  "問題5 用法": "Chọn câu sử dụng từ đúng nhất."
+};
+/* =================== TABS =================== */
+const tabBtns = document.querySelectorAll(".tab-btn");
+const panels = document.querySelectorAll(".panel");
+function showTab(name){
+  tabBtns.forEach(b => b.classList.toggle("active", b.dataset.tab === name));
+  panels.forEach(p => p.classList.toggle("active", p.id === "panel-" + name));
+  localStorage.setItem("n3_last_tab", name);
+}
+tabBtns.forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+/* =================== VOCAB =================== */
+const vocabRoot = document.getElementById("vocab-root");
+function renderVocab(){
+  let html = "";
+  CATS.forEach((cat, ci) => {
+    const rows = VOCAB.filter(v => v.cat === ci);
+    html += `<details class="cat" data-cat="${ci}" open>
+      <summary>
+        <span class="code jp">${cat.code}</span>
+        <span>${cat.name}</span>
+        <span class="n">${cat.count} từ</span>
+        <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 6 6 6-6 6"/></svg>
+      </summary>
+      <div class="tblwrap"><table class="vocab">
+        <thead><tr><th>STT</th><th>Từ / Kanji</th><th>Cách đọc</th><th>Nghĩa</th><th></th></tr></thead>
+        <tbody>`;
+    rows.forEach(v => {
+      html += `<tr data-word="${v.word.toLowerCase()}" data-reading="${v.reading.toLowerCase()}" data-meaning="${v.meaning.toLowerCase()}">
+        <td class="stt">${v.stt}</td>
+        <td class="word jp">${v.word}</td>
+        <td class="reading jp">${v.reading}</td>
+        <td class="meaning">${v.meaning}</td>
+        <td class="lvl"><span class="lvl-dot ${v.level}" title="Nhóm ${v.level}"></span></td>
+      </tr>`;
+    });
+    html += `</tbody></table></div></details>`;
+  });
+  vocabRoot.innerHTML = html;
+  // default: collapse all but first for a calmer initial view
+  vocabRoot.querySelectorAll("details.cat").forEach((d,i) => { if(i>0) d.removeAttribute("open"); });
+}
+renderVocab();
+
+document.getElementById("vocab-expand").addEventListener("click", () => {
+  vocabRoot.querySelectorAll("details.cat").forEach(d => d.setAttribute("open",""));
+});
+document.getElementById("vocab-collapse").addEventListener("click", () => {
+  vocabRoot.querySelectorAll("details.cat").forEach(d => d.removeAttribute("open"));
+});
+document.getElementById("vocab-search").addEventListener("input", (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  let anyVisible = false;
+  vocabRoot.querySelectorAll("details.cat").forEach(det => {
+    let catHas = false;
+    det.querySelectorAll("tbody tr").forEach(tr => {
+      const hit = !q || tr.dataset.word.includes(q) || tr.dataset.reading.includes(q) || tr.dataset.meaning.includes(q);
+      tr.style.display = hit ? "" : "none";
+      if(hit) catHas = true;
+    });
+    det.style.display = catHas ? "" : "none";
+    if(q) det.toggleAttribute("open", catHas); else det.open = det === vocabRoot.querySelector("details.cat");
+    if(catHas) anyVisible = true;
+  });
+  document.getElementById("vocab-empty").style.display = (q && !anyVisible) ? "block" : "none";
+});
+
+/* =================== KANJI =================== */
+const kanjiRoot = document.getElementById("kanji-root");
+function renderKanji(){
+  let html = "";
+  KANJI.forEach(k => {
+    html += `<div class="kcard" data-kanji="${k.kanji.toLowerCase()}" data-example="${k.example.toLowerCase()}" data-reading="${k.reading.toLowerCase()}" data-meaning="${k.meaning.toLowerCase()}">
+      <div class="glyph jp">${k.kanji}</div>
+      <div class="ex jp">${k.example}</div>
+      <div class="rd jp">${k.reading}</div>
+      <div class="mn">${k.meaning}</div>
+    </div>`;
+  });
+  kanjiRoot.innerHTML = html;
+}
+renderKanji();
+document.getElementById("kanji-search").addEventListener("input", (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  let any = false;
+  kanjiRoot.querySelectorAll(".kcard").forEach(c => {
+    const hit = !q || c.dataset.kanji.includes(q) || c.dataset.example.includes(q) || c.dataset.reading.includes(q) || c.dataset.meaning.includes(q);
+    c.style.display = hit ? "" : "none";
+    if(hit) any = true;
+  });
+  document.getElementById("kanji-empty").style.display = (q && !any) ? "block" : "none";
+});
+
+/* =================== QUIZZES =================== */
+const quizState = {}; // deIdx -> { answers:{}, submitted:bool, timer:{sec, running, handle} }
+
+function fmtTime(sec){
+  const m = Math.floor(sec/60), s = sec%60;
+  return String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+}
+
+function buildQuizPanel(deIdx){
+  const qs = QUIZZES[deIdx];
+  const root = document.getElementById("qroot-de" + (deIdx+1));
+  if(!root) return;
+  let bySection = [];
+  let lastSection = null;
+  qs.forEach(q => {
+    if(q.section !== lastSection){ bySection.push({section:q.section, items:[]}); lastSection = q.section; }
+    bySection[bySection.length-1].items.push(q);
+  });
+  let html = "";
+  bySection.forEach(sec => {
+    html += `<div class="qsection-title"><span class="disp jp">${sec.section}</span><span class="hint">${SECTION_HINTS[sec.section] || ""}</span></div>`;
+    sec.items.forEach(q => {
+      html += `<div class="qcard" id="de${deIdx+1}-q${q.num}" data-num="${q.num}" data-answer="${q.answer}">
+        <div class="qtext"><span class="qnum">${q.num}.</span><span class="qsentence jp">${q.text}</span></div>
+        <div class="options">`;
+      q.options.forEach((opt, oi) => {
+        const on = oi+1;
+        html += `<button type="button" class="opt jp" data-opt="${on}"><span class="bub">${on}</span><span>${opt}</span></button>`;
+      });
+      html += `</div><div class="stamp"><span class="mk"></span><span class="txt"></span></div></div>`;
+    });
+  });
+  root.innerHTML = html;
+
+  root.querySelectorAll(".opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const st = quizState[deIdx];
+      if(st.submitted) return;
+      const card = btn.closest(".qcard");
+      const num = card.dataset.num;
+      st.answers[num] = parseInt(btn.dataset.opt, 10);
+      card.querySelectorAll(".opt").forEach(o => o.classList.toggle("sel", o === btn));
+      card.classList.add("answered");
+      updateProgress(deIdx);
+    });
+  });
+}
+
+function updateProgress(deIdx){
+  const st = quizState[deIdx];
+  const total = QUIZZES[deIdx].length;
+  const answered = Object.keys(st.answers).length;
+  document.getElementById("prog-fill-de" + (deIdx+1)).style.width = (answered/total*100) + "%";
+  document.getElementById("prog-label-de" + (deIdx+1)).textContent = answered + " / " + total + " câu";
+}
+
+function submitQuiz(deIdx){
+  const st = quizState[deIdx];
+  if(st.submitted) return;
+  st.submitted = true;
+  if(st.timer.handle){ clearInterval(st.timer.handle); st.timer.running = false; }
+  const qs = QUIZZES[deIdx];
+  let correct = 0;
+  const bySection = {};
+  qs.forEach(q => {
+    const card = document.getElementById("de"+(deIdx+1)+"-q"+q.num);
+    const chosen = st.answers[q.num];
+    const ok = chosen === q.answer;
+    if(ok) correct++;
+    bySection[q.section] = bySection[q.section] || {ok:0, total:0};
+    bySection[q.section].total++;
+    if(ok) bySection[q.section].ok++;
+    card.classList.add("graded");
+    card.classList.add(ok ? "correct" : "wrong");
+    card.querySelectorAll(".opt").forEach(o => {
+      const on = parseInt(o.dataset.opt,10);
+      if(on === q.answer) o.classList.add("is-correct");
+      if(on === chosen && !ok) o.classList.add("is-wrong");
+    });
+    const stamp = card.querySelector(".stamp");
+    const mk = stamp.querySelector(".mk");
+    const txt = stamp.querySelector(".txt");
+    if(ok){ mk.textContent = "◯"; txt.textContent = "Đúng"; }
+    else if(chosen){ mk.textContent = "✕"; txt.textContent = "Sai — đáp án đúng: " + q.answer; }
+    else { mk.textContent = "△"; txt.textContent = "Chưa chọn — đáp án đúng: " + q.answer; }
+  });
+
+  const total = qs.length;
+  const pct = Math.round(correct/total*100);
+  const banner = document.getElementById("banner-de"+(deIdx+1));
+  banner.classList.add("show");
+  banner.querySelector(".score-num").innerHTML = correct + "<small>／" + total + "</small>";
+  let bd = "";
+  Object.keys(bySection).forEach(s => {
+    const b = bySection[s];
+    bd += `<span>${s.replace(/^問題\d\s*/,"")}: <b>${b.ok}/${b.total}</b></span>`;
+  });
+  banner.querySelector(".breakdown").innerHTML = bd;
+
+  document.getElementById("submit-de"+(deIdx+1)).disabled = true;
+
+  localStorage.setItem("n3_de"+(deIdx+1)+"_result", JSON.stringify({correct, total, ts: Date.now()}));
+  refreshNavPill(deIdx);
+}
+
+function resetQuiz(deIdx){
+  quizState[deIdx] = { answers:{}, submitted:false, timer:{sec:1800, running:false, handle:null} };
+  buildQuizPanel(deIdx);
+  updateProgress(deIdx);
+  document.getElementById("banner-de"+(deIdx+1)).classList.remove("show");
+  document.getElementById("submit-de"+(deIdx+1)).disabled = false;
+  const t = document.getElementById("timer-de"+(deIdx+1));
+  t.textContent = fmtTime(1800);
+  document.getElementById("timerbtn-de"+(deIdx+1)).textContent = "Bắt đầu tính giờ";
+}
+
+function toggleTimer(deIdx){
+  const st = quizState[deIdx];
+  const label = document.getElementById("timerbtn-de"+(deIdx+1));
+  const disp = document.getElementById("timer-de"+(deIdx+1));
+  if(st.submitted) return;
+  if(st.timer.running){
+    clearInterval(st.timer.handle);
+    st.timer.running = false;
+    label.textContent = "Tiếp tục";
+  } else {
+    st.timer.running = true;
+    label.textContent = "Tạm dừng";
+    st.timer.handle = setInterval(() => {
+      st.timer.sec = Math.max(0, st.timer.sec - 1);
+      disp.textContent = fmtTime(st.timer.sec);
+      if(st.timer.sec === 0){
+        clearInterval(st.timer.handle);
+        st.timer.running = false;
+        label.textContent = "Hết giờ";
+        label.disabled = true;
+      }
+    }, 1000);
+  }
+}
+
+function refreshNavPill(deIdx){
+  const pill = document.getElementById("pill-de"+(deIdx+1));
+  const raw = localStorage.getItem("n3_de"+(deIdx+1)+"_result");
+  if(raw){
+    const r = JSON.parse(raw);
+    pill.textContent = r.correct + "/" + r.total;
+    document.querySelector('.tab-btn[data-tab="de'+(deIdx+1)+'"]').classList.add("done");
+  }
+}
+
+for(let i=0;i<5;i++){
+  resetQuiz(i);
+  document.getElementById("submit-de"+(i+1)).addEventListener("click", () => submitQuiz(i));
+  document.getElementById("retry-de"+(i+1)).addEventListener("click", () => resetQuiz(i));
+  document.getElementById("timerbtn-de"+(i+1)).addEventListener("click", () => toggleTimer(i));
+  refreshNavPill(i);
+}
+
+/* =================== ACCESS CONTROL (Google Sheet backend) =================== */
+const ADMIN_EMAIL = "admin@gmail.com";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzy8y_pN23z1sn4anL7S9_AK3ZNCQ4VoISz4bSWWdO8251wX1Z0sOQJmifjXetlhxXY/exec";
+const SESSION_KEY = "n3_session";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let adminPass = null; // giữ trong bộ nhớ phiên làm việc, không lưu localStorage
+let statusReqToken = 0;
+
+function loadSession(){ try { return JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); } catch(e){ return null; } }
+function saveSession(s){ if(s) localStorage.setItem(SESSION_KEY, JSON.stringify(s)); else localStorage.removeItem(SESSION_KEY); }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function fmtDate(ts){ return ts ? new Date(ts).toLocaleString("vi-VN") : "—"; }
+function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+
+async function apiCall(params){
+  const qs = new URLSearchParams(params).toString();
+  const res = await fetch(SHEET_API_URL + (SHEET_API_URL.includes("?") ? "&" : "?") + qs);
+  if(!res.ok) throw new Error("http-" + res.status);
+  const data = await res.json();
+  if(!data.ok) throw new Error(data.error || "api-error");
+  return data;
+}
+
+function showView(name){
+  ["gate","admin"].forEach(n => { document.getElementById("view-" + n).style.display = (n === name) ? "" : "none"; });
+  document.getElementById("view-app").style.display = name === "app" ? "flex" : "none";
+}
+
+function setGateStatus(kind, text){
+  document.getElementById("gate-dot").className = "status-dot" + (kind ? " " + kind : "");
+  document.getElementById("gate-status-text").textContent = text;
+}
+function gateError(msg){
+  const el = document.getElementById("gate-err");
+  el.textContent = msg;
+  el.classList.toggle("show", !!msg);
+}
+
+function applyStatus(status){
+  const btnEnter = document.getElementById("btn-enter");
+  const btnRequest = document.getElementById("btn-request");
+  if(status === "empty"){
+    setGateStatus(null, "Nhập email để bắt đầu.");
+    btnEnter.disabled = true; btnRequest.disabled = false; btnRequest.textContent = "Gửi yêu cầu";
+  } else if(status === "invalid"){
+    setGateStatus(null, "Email không hợp lệ.");
+    btnEnter.disabled = true; btnRequest.disabled = false; btnRequest.textContent = "Gửi yêu cầu";
+  } else if(status === "none"){
+    setGateStatus(null, "Chưa có yêu cầu nào cho email này.");
+    btnEnter.disabled = true; btnRequest.disabled = false; btnRequest.textContent = "Gửi yêu cầu";
+  } else if(status === "pending"){
+    setGateStatus("pending", "Yêu cầu đang chờ admin duyệt.");
+    btnEnter.disabled = true; btnRequest.disabled = true; btnRequest.textContent = "Đã gửi yêu cầu";
+  } else if(status === "approved"){
+    setGateStatus("approved", "Đã được duyệt — có thể vào trang.");
+    btnEnter.disabled = false; btnRequest.disabled = true; btnRequest.textContent = "Đã gửi yêu cầu";
+  } else if(status === "rejected"){
+    setGateStatus("rejected", "Yêu cầu đã bị từ chối. Có thể gửi lại.");
+    btnEnter.disabled = true; btnRequest.disabled = false; btnRequest.textContent = "Gửi lại yêu cầu";
+  } else {
+    setGateStatus("rejected", "Không kết nối được máy chủ.");
+    btnEnter.disabled = true; btnRequest.disabled = false; btnRequest.textContent = "Gửi yêu cầu";
+  }
+}
+
+async function onEmailChanged(e){
+  const email = e.target.value.trim();
+  const isAdmin = email.toLowerCase() === ADMIN_EMAIL;
+  document.getElementById("gate-pass-field").style.display = isAdmin ? "" : "none";
+  document.getElementById("gate-actions-user").style.display = isAdmin ? "none" : "flex";
+  document.getElementById("gate-actions-admin").style.display = isAdmin ? "flex" : "none";
+  gateError("");
+  if(isAdmin){ setGateStatus(null, "Đăng nhập bằng tài khoản quản trị."); return; }
+  if(!email){ applyStatus("empty"); return; }
+  if(!EMAIL_RE.test(email)){ applyStatus("invalid"); return; }
+
+  const token = ++statusReqToken;
+  setGateStatus(null, "Đang kiểm tra…");
+  try {
+    const data = await apiCall({ action:"status", email });
+    if(token !== statusReqToken) return;
+    applyStatus(data.status);
+  } catch(err){
+    if(token !== statusReqToken) return;
+    applyStatus("error");
+  }
+}
+
+function enterApp(email){
+  showView("app");
+  document.getElementById("brand-account").style.display = "flex";
+  document.getElementById("brand-who").textContent = email;
+  const last = localStorage.getItem("n3_last_tab");
+  showTab(last && document.getElementById("panel-" + last) ? last : "vocab");
+}
+function enterAdmin(items){ showView("admin"); renderAdminTable(items); }
+function logout(){
+  adminPass = null;
+  saveSession(null);
+  document.getElementById("gate-pass").value = "";
+  document.getElementById("gate-email").value = "";
+  showView("gate");
+  applyStatus("empty");
+}
+document.getElementById("gate-email").addEventListener("input", debounce(onEmailChanged, 400));
+document.getElementById("gate-email").addEventListener("keydown", e => {
+  if(e.key !== "Enter") return;
+  const isAdmin = e.target.value.trim().toLowerCase() === ADMIN_EMAIL;
+  if(isAdmin) document.getElementById("gate-pass").focus();
+  else document.getElementById("btn-request").click();
+});
+document.getElementById("gate-pass").addEventListener("keydown", e => { if(e.key === "Enter") document.getElementById("btn-admin-login").click(); });
+
+document.getElementById("btn-request").addEventListener("click", async () => {
+  const email = document.getElementById("gate-email").value.trim();
+  if(!EMAIL_RE.test(email)){ gateError("Email không hợp lệ."); return; }
+  const btn = document.getElementById("btn-request");
+  gateError(""); btn.disabled = true; btn.textContent = "Đang gửi…";
+  try {
+    const data = await apiCall({ action:"request", email });
+    saveSession({ email: email.toLowerCase() });
+    applyStatus(data.status);
+  } catch(err){
+    gateError("Không gửi được yêu cầu. Kiểm tra kết nối mạng.");
+    btn.disabled = false; btn.textContent = "Gửi yêu cầu";
+  }
+});
+document.getElementById("btn-enter").addEventListener("click", async () => {
+  const email = document.getElementById("gate-email").value.trim();
+  const btn = document.getElementById("btn-enter");
+  btn.disabled = true;
+  try {
+    const data = await apiCall({ action:"status", email });
+    if(data.status === "approved"){ saveSession({ email: email.toLowerCase() }); enterApp(email); }
+    else { applyStatus(data.status); btn.disabled = false; }
+  } catch(err){ gateError("Không kết nối được máy chủ."); btn.disabled = false; }
+});
+document.getElementById("btn-admin-login").addEventListener("click", async () => {
+  const pass = document.getElementById("gate-pass").value;
+  const btn = document.getElementById("btn-admin-login");
+  gateError(""); btn.disabled = true; btn.textContent = "Đang đăng nhập…";
+  try {
+    const data = await apiCall({ action:"list", pass });
+    adminPass = pass;
+    enterAdmin(data.items);
+  } catch(err){
+    gateError("Sai mật khẩu hoặc không kết nối được.");
+  } finally {
+    btn.disabled = false; btn.textContent = "Đăng nhập quản trị";
+  }
+});
+document.getElementById("brand-logout").addEventListener("click", logout);
+document.getElementById("admin-logout").addEventListener("click", logout);
+
+async function refreshAdmin(){
+  try {
+    const data = await apiCall({ action:"list", pass: adminPass });
+    renderAdminTable(data.items);
+  } catch(err){
+    alert("Mất phiên quản trị hoặc mất kết nối. Vui lòng đăng nhập lại.");
+    logout();
+  }
+}
+
+function renderAdminTable(items){
+  const list = (items || []).slice().sort((a,b) => (b.ts||0) - (a.ts||0));
+  const tbody = document.getElementById("admin-tbody");
+  document.getElementById("admin-empty").style.display = list.length ? "none" : "block";
+  const labels = { pending:"Chờ duyệt", approved:"Đã duyệt", rejected:"Từ chối" };
+  tbody.innerHTML = list.map(r => {
+    const badge = `<span class="badge ${r.status}">${labels[r.status] || r.status}</span>`;
+    let actions = "";
+    if(r.status !== "approved") actions += `<button class="btn primary" data-act="approve" data-email="${escapeHtml(r.email)}" type="button">Duyệt</button>`;
+    if(r.status !== "rejected") actions += `<button class="btn" data-act="reject" data-email="${escapeHtml(r.email)}" type="button">Từ chối</button>`;
+    actions += `<button class="btn ghost" data-act="delete" data-email="${escapeHtml(r.email)}" type="button">Xoá</button>`;
+    return `<tr><td class="em">${escapeHtml(r.email)}</td><td>${fmtDate(r.ts)}</td><td>${badge}</td><td><div class="row-actions">${actions}</div></td></tr>`;
+  }).join("");
+  tbody.querySelectorAll("button[data-act]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const email = btn.dataset.email, act = btn.dataset.act;
+      btn.disabled = true;
+      try {
+        if(act === "approve") await apiCall({ action:"approve", email, pass: adminPass });
+        else if(act === "reject") await apiCall({ action:"reject", email, pass: adminPass });
+        else if(act === "delete") await apiCall({ action:"delete", email, pass: adminPass });
+        await refreshAdmin();
+      } catch(err){ alert("Thao tác thất bại. Kiểm tra kết nối."); btn.disabled = false; }
+    });
+  });
+}
+document.getElementById("admin-add-btn").addEventListener("click", async () => {
+  const input = document.getElementById("admin-add-email");
+  const email = input.value.trim();
+  if(!EMAIL_RE.test(email)) return;
+  const btn = document.getElementById("admin-add-btn");
+  btn.disabled = true; input.disabled = true;
+  try {
+    await apiCall({ action:"request", email });
+    await apiCall({ action:"approve", email, pass: adminPass });
+    input.value = "";
+    await refreshAdmin();
+  } catch(err){ alert("Không thêm được. Kiểm tra kết nối."); }
+  finally { btn.disabled = false; input.disabled = false; }
+});
+
+/* =================== INIT =================== */
+async function initAccess(){
+  showView("gate");
+  const session = loadSession();
+  if(session && session.email){
+    document.getElementById("gate-email").value = session.email;
+    setGateStatus(null, "Đang kiểm tra phiên đã lưu…");
+    try {
+      const data = await apiCall({ action:"status", email: session.email });
+      if(data.status === "approved"){ enterApp(session.email); return; }
+      applyStatus(data.status);
+    } catch(err){ applyStatus("error"); }
+  } else {
+    applyStatus("empty");
+  }
+}
+initAccess();
+</script>
+</body>
+</html>
