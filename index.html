@@ -313,6 +313,16 @@
   .qcard.wrong .stamp{ color:var(--shu); }
   .qcard .stamp .mk{ font-size:15px; }
 
+  .qcard .situation{ font-size:12.5px; color:var(--ink-muted); margin-bottom:8px; }
+  .qcard .listen-controls{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .btn.sm{ padding:5px 11px; font-size:12px; }
+  .rate-select{ font-size:12px; padding:5px 7px; border-radius:7px; border:1px solid var(--line); background:var(--bg-raised); color:var(--ink); }
+  .qcard .script-box{
+    display:none; background:var(--bg-sunken); border:1px solid var(--line-soft); border-radius:8px;
+    padding:10px 12px; font-size:14.5px; line-height:1.7; margin-bottom:12px; white-space:pre-wrap;
+  }
+  .qcard .script-box.show{ display:block; }
+
   @media (max-width:560px){
     .options{ grid-template-columns:1fr; margin-left:0; }
     .qcard .qtext{ margin-bottom:10px; }
@@ -460,6 +470,7 @@
         <span class="stat">583 từ</span>
         <span class="stat">180 Kanji</span>
         <span class="stat">5 đề × 35 câu</span>
+        <span class="stat">18 câu nghe</span>
       </div>
       <div class="top-account" id="brand-account">
         <span class="who" id="brand-who"></span>
@@ -476,6 +487,8 @@
       <button class="tab-btn" data-tab="de3">Đề luyện 3<span class="score-pill" id="pill-de3"></span></button>
       <button class="tab-btn" data-tab="de4">Đề luyện 4<span class="score-pill" id="pill-de4"></span></button>
       <button class="tab-btn" data-tab="de5">Đề luyện 5<span class="score-pill" id="pill-de5"></span></button>
+      <div class="grp-label">Luyện nghe</div>
+      <button class="tab-btn" data-tab="listen">Nghe hiểu<span class="score-pill" id="pill-listen"></span></button>
     </nav>
   </aside>
 
@@ -651,6 +664,34 @@
       </div>
 
       <div id="qroot-de5"></div>
+    </section>
+
+
+    <section class="panel" id="panel-listen">
+      <div class="page-head">
+        <h1>Nghe hiểu — 聴解</h1>
+        <p>18 câu, 5 dạng 問題1–問題5 giống cấu trúc đề thi N3. Vì trang không nhúng file audio thật, mỗi câu dùng giọng đọc tổng hợp (Web Speech, tiếng Nhật) của trình duyệt — bấm "Nghe" để phát, có thể chỉnh tốc độ. Nếu trình duyệt không có giọng tiếng Nhật, bấm "Hiện script" để đọc văn bản.</p>
+      </div>
+
+      <div class="quiz-head">
+        <button class="btn" id="timerbtn-listen">Bắt đầu tính giờ</button>
+        <span class="timer mono" id="timer-listen">15:00</span>
+        <div class="progress-wrap">
+          <div class="progress-label"><span id="prog-label-listen">0 / 18 câu</span></div>
+          <div class="progress-track"><div class="progress-fill" id="prog-fill-listen" style="width:0%;"></div></div>
+        </div>
+        <div class="quiz-actions">
+          <button class="btn ghost" id="retry-listen">Làm lại</button>
+          <button class="btn primary" id="submit-listen">Nộp bài</button>
+        </div>
+      </div>
+
+      <div class="score-banner" id="banner-listen">
+        <div class="score-num big" id="scorenum-listen"></div>
+        <div class="breakdown"></div>
+      </div>
+
+      <div id="qroot-listen"></div>
     </section>
 
 
@@ -923,9 +964,291 @@ for(let i=0;i<5;i++){
   refreshNavPill(i);
 }
 
+/* =================== LISTENING (聴解) =================== */
+// Nội dung tự soạn theo cấu trúc 5 dạng câu hỏi nghe của đề thi N3
+// (không sao chép từ đề thi thật). Vì không nhúng file audio ngoài,
+// mỗi câu được đọc bằng giọng tổng hợp tiếng Nhật của trình duyệt (Web Speech API).
+const LISTENING = [
+  {num:1, section:"問題1 課題理解", situation:"Hai đồng nghiệp đang nói chuyện trong văn phòng.",
+    script:"女：すみません、この資料をコピーしてもらえますか。10部お願いします。それから、会議室の椅子も足りないので、隣の部屋から二つ持ってきてくれますか。\n男：分かりました。コピーからやりますね。\n女：あ、椅子は先にお願いします。会議がもうすぐ始まるので。\n男：はい、わかりました。",
+    text:"男の人はこの後、まず何をしますか。",
+    options:["資料を10部コピーする","隣の部屋から椅子を持ってくる","会議室を予約する","会議の準備をする"], answer:2},
+  {num:2, section:"問題1 課題理解", situation:"上司と部下が出張の準備について話しています。",
+    script:"男：田中さん、来週の出張の件ですが、新幹線の予約はもう済みましたか。\n女：いえ、まだです。今日中にやろうと思っていました。\n男：そうですか。実は、部長がホテルも一緒に予約してほしいと言っていました。\n女：わかりました。では、新幹線とホテル、両方今日中に予約します。\n男：お願いします。あ、あと出張の報告書のフォーマットも準備しておいてもらえますか。\n女：それは来週で大丈夫ですか。\n男：はい、来週で結構です。",
+    text:"女の人は今日、何をしますか。",
+    options:["新幹線とホテルの予約","報告書のフォーマットの準備","部長への報告","出張の日程の変更"], answer:1},
+  {num:3, section:"問題1 課題理解", situation:"図書館で、女の人がカードを作ろうとしています。",
+    script:"女：すみません、図書館のカードを作りたいんですが。\n男：はい、こちらの申込書に名前と住所を書いてください。それから、学生証か身分証明書を見せてもらえますか。\n女：あ、今日は学生証を持ってきていません。\n男：それでは、申込書だけ書いていただいて、次回身分証明書を持ってきたときにカードをお渡しします。\n女：わかりました。",
+    text:"女の人はこの後、まず何をしますか。",
+    options:["学生証を取りに帰る","申込書に記入する","図書館のカードを受け取る","身分証明書のコピーを取る"], answer:2},
+  {num:4, section:"問題1 課題理解", situation:"会社で、明日の展示会の準備について話しています。",
+    script:"男：山田さん、明日の展示会の準備はどうですか。\n女：ポスターは印刷が終わりました。あとはパンフレットを並べるだけです。\n男：じゃ、パンフレットは僕がやるので、山田さんは受付の準備をお願いできますか。名簿と名札の確認です。\n女：わかりました。そうします。",
+    text:"女の人はこの後、何をしますか。",
+    options:["ポスターを印刷する","パンフレットを並べる","名簿と名札を確認する","展示会の案内状を送る"], answer:3},
+
+  {num:5, section:"問題2 ポイント理解", situation:"男の人と女の人が引っ越しについて話しています。",
+    script:"男：引っ越しするって聞いたけど、本当？\n女：うん、今のアパートは駅から遠いし、部屋も狭いから、もっと便利な所に住みたくて。\n男：家賃が高くなるんじゃない？\n女：それはちょっと心配だけど、駅から近い方が通勤の時間が減るから、そのほうがいいかなと思って。",
+    text:"女の人は、なぜ引っ越しをすることにしましたか。",
+    options:["家賃が今より安くなるから","部屋をもっと広くしたいから","通勤にかかる時間を減らしたいから","新しい仕事が決まったから"], answer:3},
+  {num:6, section:"問題2 ポイント理解", situation:"同僚同士が今日の会議について話しています。",
+    script:"女：今日の会議、どうでしたか。\n男：資料の準備は良かったんですが、時間が足りなくて、最後まで話し合えなかったのが問題でしたね。\n女：確かに、時間が短かったですね。\n男：次は、議題を減らすか、時間をもっと長くとったほうがいいと思います。",
+    text:"男の人は、今日の会議で何が一番問題だったと言っていますか。",
+    options:["資料の準備ができていなかったこと","参加者が少なかったこと","話し合う時間が足りなかったこと","会議室が使えなかったこと"], answer:3},
+  {num:7, section:"問題2 ポイント理解", situation:"友達同士がレストランについて話しています。",
+    script:"男：あの店、また行きたいって言ってたよね。何がよかったの？\n女：料理もおいしかったけど、それより店員さんの対応がすごく丁寧で、気持ちよく食事ができたんだよね。\n男：確かに、サービスも大事だよね。\n女：うん、料理は他の店でも似たようなのがあるけど、あの雰囲気とサービスはなかなかないから。",
+    text:"女の人が、その店をまた利用したいと言っている一番の理由は何ですか。",
+    options:["料理の値段が安かったから","店員の対応が良かったから","店が駅に近かったから","メニューの種類が多かったから"], answer:2},
+  {num:8, section:"問題2 ポイント理解", situation:"同僚が休んだ理由について話しています。",
+    script:"女：田中さん、今日休みだって聞いたけど、大丈夫？\n男：実は、朝から熱があって、病院に行ってきたんです。風邪だと言われました。\n女：それなら、ゆっくり休んだほうがいいですね。\n男：ありがとうございます。無理して出勤すると、他の人にも風邪をうつしてしまうので。",
+    text:"男の人は、なぜ会社を休むことにしましたか。",
+    options:["風邪をひいて熱があったから","病院の予約があったから","家族の用事があったから","仕事に行きたくなかったから"], answer:1},
+
+  {num:9, section:"問題3 概要理解", situation:"ラジオ番組を聞いています。",
+    script:"最近、家で野菜を育てる人が増えています。ベランダや庭がなくても、キッチンの窓際で育てられる野菜もあり、初心者にも人気です。育てるのに特別な道具はいらず、土と種、そして日当たりのよい場所があれば十分です。忙しくても、水をやる時間さえ作れば、誰でも楽しめる趣味だと言えるでしょう。",
+    text:"この話のテーマは何ですか。",
+    options:["ベランダの作り方","家庭での野菜作りの魅力","野菜の値段の変化","忙しい人向けの料理方法"], answer:2},
+  {num:10, section:"問題3 概要理解", situation:"会社のミーティングで話しています。",
+    script:"最近、社内でペーパーレス化を進めています。会議の資料は基本的に画面で見るようにし、印刷は必要な場合だけにします。最初は不便に感じる人もいるかもしれませんが、紙を減らすことで、資料を探す時間も短くなり、環境にも優しくなります。皆さんの協力をお願いします。",
+    text:"話し手が最も伝えたいことは何ですか。",
+    options:["会議の回数を減らしてほしい","資料の印刷を増やしてほしい","ペーパーレス化に協力してほしい","新しいパソコンを使ってほしい"], answer:3},
+
+  {num:11, section:"問題4 発話表現", situation:"友達が重い荷物を持って歩いています。あなたは何と言いますか。",
+    script:"友達が重い荷物を持って歩いています。あなたは何と言いますか。",
+    text:"何と言いますか。",
+    options:["持ちましょうか。","持ってもらいましょうか。","持たれましょうか。","持たせてください。"], answer:1},
+  {num:12, section:"問題4 発話表現", situation:"会議中、隣の人の声が聞こえにくいです。あなたは何と言いますか。",
+    script:"会議中、隣の人の声が聞こえにくいです。あなたは何と言いますか。",
+    text:"何と言いますか。",
+    options:["もう少し大きい声で話していただけますか。","もう少し大きい声で話してもらいたいですか。","もう少し大きい声で話しましょうか。","もう少し大きい声で話しておきます。"], answer:1},
+  {num:13, section:"問題4 発話表現", situation:"レストランで注文した料理がまだ来ません。あなたは店員に何と言いますか。",
+    script:"レストランで注文した料理がまだ来ません。あなたは店員に何と言いますか。",
+    text:"何と言いますか。",
+    options:["注文した料理はまだですか。","注文した料理を作ってもいいですか。","注文した料理を食べたことがありますか。","注文した料理を持って行きますか。"], answer:1},
+
+  {num:14, section:"問題5 即時応答", situation:"短い発言を聞いて、最も自然な返事を選んでください。",
+    script:"今日は早く帰ってもいいですか。", text:"最も自然な返事はどれですか。",
+    options:["はい、いいですよ。","はい、そうしましょう。","いいえ、まだです。","いいえ、知りません。"], answer:1},
+  {num:15, section:"問題5 即時応答", situation:"短い発言を聞いて、最も自然な返事を選んでください。",
+    script:"これ、コピーしておいてもらえますか。", text:"最も自然な返事はどれですか。",
+    options:["はい、何枚必要ですか。","はい、そうだったんですか。","はい、それはよかったです。","はい、行ってきます。"], answer:1},
+  {num:16, section:"問題5 即時応答", situation:"短い発言を聞いて、最も自然な返事を選んでください。",
+    script:"すみません、道に迷ってしまったんですが。", text:"最も自然な返事はどれですか。",
+    options:["どちらまで行かれますか。","それはおめでとうございます。","では、また今度お願いします。","それはよかったですね。"], answer:1},
+  {num:17, section:"問題5 即時応答", situation:"短い発言を聞いて、最も自然な返事を選んでください。",
+    script:"あの映画、見に行きませんか。", text:"最も自然な返事はどれですか。",
+    options:["いいですね、いつ行きましょうか。","いいえ、まだ食べていません。","はい、もう見てきました。","そうですね、寒くなりましたね。"], answer:1},
+  {num:18, section:"問題5 即時応答", situation:"短い発言を聞いて、最も自然な返事を選んでください。",
+    script:"明日の会議、資料は準備できていますか。", text:"最も自然な返事はどれですか。",
+    options:["はい、もう出来ています。","はい、行ってきます。","いいえ、知りませんでした。","いいえ、大丈夫です。"], answer:1}
+];
+
+const LISTEN_HINTS = {
+  "問題1 課題理解": "Nghe hội thoại rồi chọn việc cần làm tiếp theo.",
+  "問題2 ポイント理解": "Đọc câu hỏi trước, sau đó nghe để nắm đúng điểm cần chú ý.",
+  "問題3 概要理解": "Nghe đoạn nói ngắn và nắm ý chính, chưa có lựa chọn hiển thị trước khi nghe.",
+  "問題4 発話表現": "Xem tình huống rồi chọn câu nói phù hợp nhất.",
+  "問題5 即時応答": "Nghe một câu ngắn rồi chọn phản hồi tự nhiên nhất."
+};
+
+let jaVoice = null;
+function pickJaVoice(){
+  if(!("speechSynthesis" in window)) return;
+  const voices = window.speechSynthesis.getVoices();
+  jaVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("ja")) || null;
+}
+if("speechSynthesis" in window){
+  pickJaVoice();
+  window.speechSynthesis.onvoiceschanged = pickJaVoice;
+}
+function speakJa(text, rate){
+  if(!("speechSynthesis" in window)){
+    alert("Trình duyệt này không hỗ trợ đọc audio (Web Speech API). Hãy dùng nút \"Hiện script\" để đọc văn bản.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ja-JP";
+  u.rate = rate || 1;
+  if(jaVoice) u.voice = jaVoice;
+  window.speechSynthesis.speak(u);
+}
+
+const listenState = { answers:{}, submitted:false, timer:{sec:900, running:false, handle:null} };
+
+function buildListenPanel(){
+  const root = document.getElementById("qroot-listen");
+  if(!root) return;
+  let bySection = [];
+  let lastSection = null;
+  LISTENING.forEach(q => {
+    if(q.section !== lastSection){ bySection.push({section:q.section, items:[]}); lastSection = q.section; }
+    bySection[bySection.length-1].items.push(q);
+  });
+  let html = "";
+  bySection.forEach(sec => {
+    html += `<div class="qsection-title"><span class="disp jp">${sec.section}</span><span class="hint">${LISTEN_HINTS[sec.section] || ""}</span></div>`;
+    sec.items.forEach(q => {
+      html += `<div class="qcard" id="listen-q${q.num}" data-num="${q.num}" data-answer="${q.answer}">
+        <div class="situation">${q.num}. ${q.situation}</div>
+        <div class="listen-controls">
+          <button type="button" class="btn sm play-btn" data-script="${escapeHtml(q.script)}">▶ Nghe</button>
+          <select class="rate-select">
+            <option value="0.75">0.75×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.25">1.25×</option>
+          </select>
+          <button type="button" class="btn ghost sm toggle-script">Hiện script</button>
+        </div>
+        <div class="script-box jp">${q.script}</div>
+        <div class="qtext"><span class="qsentence jp">${q.text}</span></div>
+        <div class="options">`;
+      q.options.forEach((opt, oi) => {
+        const on = oi+1;
+        html += `<button type="button" class="opt jp" data-opt="${on}"><span class="bub">${on}</span><span>${opt}</span></button>`;
+      });
+      html += `</div><div class="stamp"><span class="mk"></span><span class="txt"></span></div></div>`;
+    });
+  });
+  root.innerHTML = html;
+
+  root.querySelectorAll(".play-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".qcard");
+      const rate = parseFloat(card.querySelector(".rate-select").value) || 1;
+      speakJa(btn.dataset.script, rate);
+    });
+  });
+  root.querySelectorAll(".toggle-script").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const box = btn.closest(".qcard").querySelector(".script-box");
+      const showing = box.classList.toggle("show");
+      btn.textContent = showing ? "Ẩn script" : "Hiện script";
+    });
+  });
+  root.querySelectorAll(".opt").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if(listenState.submitted) return;
+      const card = btn.closest(".qcard");
+      const num = card.dataset.num;
+      listenState.answers[num] = parseInt(btn.dataset.opt, 10);
+      card.querySelectorAll(".opt").forEach(o => o.classList.toggle("sel", o === btn));
+      card.classList.add("answered");
+      updateListenProgress();
+    });
+  });
+}
+
+function updateListenProgress(){
+  const total = LISTENING.length;
+  const answered = Object.keys(listenState.answers).length;
+  document.getElementById("prog-fill-listen").style.width = (answered/total*100) + "%";
+  document.getElementById("prog-label-listen").textContent = answered + " / " + total + " câu";
+}
+
+function submitListenQuiz(){
+  if(listenState.submitted) return;
+  listenState.submitted = true;
+  if(listenState.timer.handle){ clearInterval(listenState.timer.handle); listenState.timer.running = false; }
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  let correct = 0;
+  const bySection = {};
+  LISTENING.forEach(q => {
+    const card = document.getElementById("listen-q"+q.num);
+    const chosen = listenState.answers[q.num];
+    const ok = chosen === q.answer;
+    if(ok) correct++;
+    bySection[q.section] = bySection[q.section] || {ok:0, total:0};
+    bySection[q.section].total++;
+    if(ok) bySection[q.section].ok++;
+    card.classList.add("graded");
+    card.classList.add(ok ? "correct" : "wrong");
+    card.querySelectorAll(".opt").forEach(o => {
+      const on = parseInt(o.dataset.opt,10);
+      if(on === q.answer) o.classList.add("is-correct");
+      if(on === chosen && !ok) o.classList.add("is-wrong");
+    });
+    const stamp = card.querySelector(".stamp");
+    const mk = stamp.querySelector(".mk");
+    const txt = stamp.querySelector(".txt");
+    if(ok){ mk.textContent = "◯"; txt.textContent = "Đúng"; }
+    else if(chosen){ mk.textContent = "✕"; txt.textContent = "Sai — đáp án đúng: " + q.answer; }
+    else { mk.textContent = "△"; txt.textContent = "Chưa chọn — đáp án đúng: " + q.answer; }
+  });
+
+  const total = LISTENING.length;
+  const banner = document.getElementById("banner-listen");
+  banner.classList.add("show");
+  banner.querySelector(".score-num").innerHTML = correct + "<small>／" + total + "</small>";
+  let bd = "";
+  Object.keys(bySection).forEach(s => {
+    const b = bySection[s];
+    bd += `<span>${s.replace(/^問題\d\s*/,"")}: <b>${b.ok}/${b.total}</b></span>`;
+  });
+  banner.querySelector(".breakdown").innerHTML = bd;
+
+  document.getElementById("submit-listen").disabled = true;
+  localStorage.setItem("n3_listen_result", JSON.stringify({correct, total, ts: Date.now()}));
+  refreshListenPill();
+}
+
+function resetListenQuiz(){
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  listenState.answers = {};
+  listenState.submitted = false;
+  if(listenState.timer.handle) clearInterval(listenState.timer.handle);
+  listenState.timer = {sec:900, running:false, handle:null};
+  buildListenPanel();
+  updateListenProgress();
+  document.getElementById("banner-listen").classList.remove("show");
+  document.getElementById("submit-listen").disabled = false;
+  const t = document.getElementById("timer-listen");
+  t.textContent = fmtTime(900);
+  document.getElementById("timerbtn-listen").textContent = "Bắt đầu tính giờ";
+}
+
+function toggleListenTimer(){
+  const label = document.getElementById("timerbtn-listen");
+  const disp = document.getElementById("timer-listen");
+  if(listenState.submitted) return;
+  if(listenState.timer.running){
+    clearInterval(listenState.timer.handle);
+    listenState.timer.running = false;
+    label.textContent = "Tiếp tục";
+  } else {
+    listenState.timer.running = true;
+    label.textContent = "Tạm dừng";
+    listenState.timer.handle = setInterval(() => {
+      listenState.timer.sec = Math.max(0, listenState.timer.sec - 1);
+      disp.textContent = fmtTime(listenState.timer.sec);
+      if(listenState.timer.sec === 0){
+        clearInterval(listenState.timer.handle);
+        listenState.timer.running = false;
+        label.textContent = "Hết giờ";
+        label.disabled = true;
+      }
+    }, 1000);
+  }
+}
+
+function refreshListenPill(){
+  const pill = document.getElementById("pill-listen");
+  const raw = localStorage.getItem("n3_listen_result");
+  if(raw){
+    const r = JSON.parse(raw);
+    pill.textContent = r.correct + "/" + r.total;
+    document.querySelector('.tab-btn[data-tab="listen"]').classList.add("done");
+  }
+}
+
+resetListenQuiz();
+document.getElementById("submit-listen").addEventListener("click", submitListenQuiz);
+document.getElementById("retry-listen").addEventListener("click", resetListenQuiz);
+document.getElementById("timerbtn-listen").addEventListener("click", toggleListenTimer);
+refreshListenPill();
+
 /* =================== ACCESS CONTROL (Google Sheet backend) =================== */
 const ADMIN_EMAIL = "admin@gmail.com";
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzy8y_pN23z1sn4anL7S9_AK3ZNCQ4VoISz4bSWWdO8251wX1Z0sOQJmifjXetlhxXY/exec";
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycby66nxuEqbMpulZ6gWbvwlg2NjpgtCApWKQsyctF-6QloYMsUmXyApRMK98kRvgsVM4Nw/exec";
 const SESSION_KEY = "n3_session";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 let adminPass = null; // giữ trong bộ nhớ phiên làm việc, không lưu localStorage
@@ -937,13 +1260,34 @@ function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;",
 function fmtDate(ts){ return ts ? new Date(ts).toLocaleString("vi-VN") : "—"; }
 function debounce(fn, ms){ let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
 
-async function apiCall(params){
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function apiCallOnce(params){
   const qs = new URLSearchParams(params).toString();
   const res = await fetch(SHEET_API_URL + (SHEET_API_URL.includes("?") ? "&" : "?") + qs);
   if(!res.ok) throw new Error("http-" + res.status);
   const data = await res.json();
   if(!data.ok) throw new Error(data.error || "api-error");
   return data;
+}
+
+// Apps Script's redirect-based response (302 -> script.googleusercontent.com)
+// occasionally 404s on a cold start or brief propagation delay. Retry silently
+// before surfacing an error, but don't retry genuine application-level errors.
+async function apiCall(params){
+  const NO_RETRY = new Set(["bad pass", "missing email", "unknown action"]);
+  const delays = [0, 500, 1200];
+  let lastErr;
+  for(let i = 0; i < delays.length; i++){
+    if(delays[i]) await sleep(delays[i]);
+    try {
+      return await apiCallOnce(params);
+    } catch(err){
+      lastErr = err;
+      if(NO_RETRY.has(err.message)) throw err;
+    }
+  }
+  throw lastErr;
 }
 
 function showView(name){
